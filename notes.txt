@@ -1,0 +1,20 @@
+Next Steps:
+
+Clicking a button event:
+1. create a state for the click - which button was it
+2. change the text and color of the button (props/state)
+
+3. maintain a queue with all calls, push the call into the queue (maybe create a call object with time, floor, status).
+
+4. queue.shift for the first call in the queue, find the closest elevator (building instance has all the positions so a simple calcDiff function should be enough)
+
+5. animation - move the svg to the floor, change the color to red, change the status of the current elevator to occupied. and after it arrived make a sound,change color of svg to green, change the button to "arrived" and then after 2 seconds back to inital "Call" message and svg back to black.
+
+6. 
+
+
+
+
+/////// IMPORTANT
+
+click events or properties only in the component itself!!! also content!!!

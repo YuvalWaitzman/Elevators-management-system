@@ -1,7 +1,21 @@
 import Elevator from "./Elevator";
-import Button from "./../Components/Button";
-import TableCell from "./../Components/TableCell";
+import Button from "../Components/Button";
+import TableCell from "../Components/TableCell";
 import styled from "styled-components";
+// import ElevatorImg from "../Components/ElevatorImg";
+
+const StyledSpan = styled.span`
+  display: flex;
+  margin-left: 60px;
+  font-weight: bold;
+`;
+const StyledSpanGround = styled.span`
+  display: flex;
+  margin-right: 10px;
+  margin-left: 30px;
+  text-align: center;
+  font-weight: bold;
+`;
 
 class Building {
   constructor(floors, elevatorsNumber) {
@@ -21,19 +35,24 @@ class Building {
     for (let i = this.floors; i >= 1; i--) {
       const cols = [];
       if (i === 1) {
-        cols.push(<span> Ground Floor </span>);
+        cols.push(<StyledSpanGround> Ground Floor </StyledSpanGround>);
       } else if (i === 2) {
-        cols.push(<span>{i - 1}st </span>);
+        cols.push(<StyledSpan>{i - 1}st </StyledSpan>);
       } else if (i === 3) {
-        cols.push(<span>{i - 1}nd </span>);
+        cols.push(<StyledSpan>{i - 1}nd </StyledSpan>);
       } else if (i === 4) {
-        cols.push(<span>{i - 1}rd </span>);
+        cols.push(<StyledSpan>{i - 1}rd </StyledSpan>);
       } else {
-        cols.push(<span>{i - 1}th</span>);
+        cols.push(<StyledSpan>{i - 1}th</StyledSpan>);
       }
 
       for (let j = 1; j <= this.elevatorsNumber; j++) {
-        cols.push(<TableCell> </TableCell>);
+        if (i === 1) {
+          //ground floor
+          cols.push(<TableCell isLastRow="true"></TableCell>);
+        } else {
+          cols.push(<TableCell />);
+        }
 
         if (j === this.elevatorsNumber) {
           cols.push(<Button>Call</Button>);

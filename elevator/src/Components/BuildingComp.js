@@ -1,14 +1,16 @@
 import Building from "../Classes/Building";
 import styled from "styled-components";
 
+const BuildingContainer = styled.div`
+  margin-top: 10px;
+  margin-right: 70px;
+`;
+
 let BuildingComp = function () {
   const building = new Building(10, 5);
   building.initiateElevators();
 
-  // Create logic - to draw the build according to the floors and elevators in the current instance
-  // floors - number of horizonal lines, elevators - number of vertical lines
-
-  return <>{building.renderBuilding()}</>;
+  return <BuildingContainer>{building.renderBuilding()}</BuildingContainer>;
 };
 
 export default BuildingComp;

@@ -67,7 +67,6 @@ let BuildingComp = function () {
         cols.push(<TableCell id={cellId} isLastRow="true"></TableCell>);
       } else {
         cols.push(<TableCell id={cellId} />);
-        console.log(cols[j]);
       }
       if (j === building.elevatorsNumber) {
         cols.push(building.buttons[i]);

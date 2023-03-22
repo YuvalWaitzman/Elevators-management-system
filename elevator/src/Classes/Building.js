@@ -21,7 +21,7 @@ class Building {
     for (let i = this.floors; i >= 1; i--) {
       const cols = [];
       if (i === 1) {
-        cols.push(<span>Ground Floor </span>);
+        cols.push(<span> Ground Floor </span>);
       } else if (i === 2) {
         cols.push(<span>{i - 1}st </span>);
       } else if (i === 3) {

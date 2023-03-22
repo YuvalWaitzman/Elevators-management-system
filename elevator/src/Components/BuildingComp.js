@@ -33,12 +33,13 @@ let BuildingComp = function () {
 
   //Setting building.buttons with click event listener
   for (let i = 0; i < building.floors; i++) {
+    let buttonId = `${i}`;
     building.buttons.push(
       <Button
         onClick={() => {
           clickHandler(i);
         }}
-        id={i}
+        id={buttonId}
       >
         Call
       </Button>

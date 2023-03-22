@@ -29,7 +29,9 @@ const CallButton = styled.button`
 const Button = function (props) {
   return (
     <>
-      <CallButton onClick={props.onClick}>Call</CallButton>
+      <CallButton id={props.id} onClick={props.onClick}>
+        Call
+      </CallButton>
     </>
   );
 };

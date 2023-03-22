@@ -61,11 +61,12 @@ let BuildingComp = function () {
     }
 
     for (let j = 1; j <= building.elevatorsNumber; j++) {
+      const cellId = `${i}${j}`;
       if (i === 0) {
         //ground floor
-        cols.push(<TableCell id={(i, j)} isLastRow="true"></TableCell>);
+        cols.push(<TableCell id={cellId} isLastRow="true"></TableCell>);
       } else {
-        cols.push(<TableCell id={(i, j)} />);
+        cols.push(<TableCell id={cellId} />);
       }
       if (j === building.elevatorsNumber) {
         cols.push(building.buttons[i]);

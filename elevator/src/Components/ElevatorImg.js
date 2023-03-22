@@ -1,5 +1,6 @@
-export const ElevatorImg = () => (
+export const ElevatorImg = (props) => (
   <svg
+    id={props.id}
     width="50"
     height="50"
     viewBox="0 0 50 50"

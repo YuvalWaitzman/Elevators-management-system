@@ -13,7 +13,7 @@ const StyledTableCell = styled.td`
 
 const TableCell = function (props) {
   return (
-    <StyledTableCell>
+    <StyledTableCell id={props.id}>
       {props.isLastRow && (
         <ImgContainer>
           <ElevatorImg />

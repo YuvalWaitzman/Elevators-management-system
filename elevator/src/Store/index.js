@@ -1,4 +1,5 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { chooseRandomFromArray } from "../Helpers/helper";
 
 const initialState = {
   elevators: [
@@ -42,6 +43,7 @@ const elevatorSystemSlice = createSlice({
 
       //choose the closest elevetor
       let minDistance = state.buttons.length;
+      let bestElevators = [];
       let bestElevator;
       let currentCall = state.callsQueue.queue.shift();
       state.elevators.forEach((elevator) => {
@@ -51,12 +53,21 @@ const elevatorSystemSlice = createSlice({
           );
           if (currentElevatorDIstance <= minDistance) {
             minDistance = currentElevatorDIstance;
-            bestElevator = elevator;
+            bestElevators.push(elevator);
           }
         }
       });
 
-      //Closest non active elevator is taking the call, if cover the case that no elevator is available
+      //case one available elevator is closest
+      if (bestElevators.length === 1) {
+        [bestElevator] = bestElevators;
+      }
+      //case more than one available elevator are closest
+      if (bestElevators.length > 1) {
+        bestElevator = chooseRandomFromArray(bestElevators);
+      }
+
+      //Chosen elevator is taking the call, if statement cover the case that no elevator is available
       if (bestElevator) {
         state.elevators[bestElevator.id - 1].status = "active";
         state.elevators[bestElevator.id - 1].destinationFloor =

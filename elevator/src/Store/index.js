@@ -57,20 +57,20 @@ const elevatorSystemSlice = createSlice({
       state.buttons[action.payload].status = "Waiting";
       //choose the closest elevetor
 
-      let minDistance = 11;
-      let bestElevator;
-      let currentCall = state.callsQueue[0];
-      state.elevators.forEach((elevator) => {
-        let currentElevatorDIstance = Math.abs(
-          elevator.currentFloor - currentCall.floor
-        );
-        if (currentElevatorDIstance <= minDistance) {
-          minDistance = currentElevatorDIstance;
-          bestElevator = elevator.id;
-        }
-      });
-      state.elevators[bestElevator.id + 1].isActive = true;
-      state.elevators[bestElevator.id + 1].destinationFloor = currentCall.floor;
+      // let minDistance = 11;
+      // let bestElevator;
+      // let currentCall = state.callsQueue[0];
+      // state.elevators.forEach((elevator) => {
+      //   let currentElevatorDIstance = Math.abs(
+      //     elevator.currentFloor - currentCall.floor
+      //   );
+      //   if (currentElevatorDIstance <= minDistance) {
+      //     minDistance = currentElevatorDIstance;
+      //     bestElevator = elevator.id;
+      //   }
+      // });
+      // state.elevators[bestElevator.id + 1].isActive = true;
+      // state.elevators[bestElevator.id + 1].destinationFloor = currentCall.floor;
     },
 
     elevatorArrived(state) {},

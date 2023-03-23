@@ -2,6 +2,8 @@ import Building from "../Classes/Building";
 import styled from "styled-components";
 import TableCell from "./TableCell";
 import Button from "../Components/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { elevatorSystemActions } from "../Store/index";
 
 const BuildingContainer = styled.div`
   margin-top: 10px;
@@ -21,6 +23,11 @@ const StyledSpanGround = styled.span`
 `;
 
 let BuildingComp = function () {
+  //Exposing component to each change in state for these fields.
+  const elevators = useSelector((state) => state.elevators);
+  const callsQueue = useSelector((state) => state.callsQueue);
+  const buttons = useSelector((state) => state.buttons);
+  const dispatch = useDispatch();
   //CREATING A NEW BUILDING INSTANCE WITH THE REQUIRES MEASURES
   const building = new Building(10, 5);
   building.initiateElevators();
@@ -28,7 +35,7 @@ let BuildingComp = function () {
   //click handler for trial
 
   let clickHandler = function (index) {
-    console.log(index);
+    dispatch(elevatorSystemActions.createCall(index));
   };
 
   //Setting building.buttons with click event listener
@@ -36,13 +43,11 @@ let BuildingComp = function () {
     let buttonId = `${i}`;
     building.buttons.push(
       <Button
-        onClick={() => {
-          clickHandler(i);
-        }}
+        // onClick={() => {
+        //   clickHandler(i);
+        // }}
         id={buttonId}
-      >
-        Call
-      </Button>
+      ></Button>
     );
   }
   //BUILD ROWS AND COLS FOR FINAL BUILDING GRID

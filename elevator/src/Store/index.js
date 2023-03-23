@@ -1,28 +1,12 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import Call from "./../Classes/Call";
-
-// const slice = createSlice({
-//   name: "counter",
-//   initialState: { counter: 0 },
-//   reducers: {
-//     blabla(state, action) {
-//       state.counter++;
-//       console.log("incrementblabla", state.counter, action.payload);
-//     },
-//     kaka() {},
-//   },
-// });
-// const store = configureStore({ reducer: slice.reducer });
-// export const sliceActions = slice.actions;
-// export default store;
 
 const initialState = {
   elevators: [
-    { id: 1, currentFloor: 0, destinationFloor: null, isActive: false },
-    { id: 2, currentFloor: 0, destinationFloor: null, isActive: false },
-    { id: 3, currentFloor: 0, destinationFloor: null, isActive: false },
-    { id: 4, currentFloor: 0, destinationFloor: null, isActive: false },
-    { id: 5, currentFloor: 0, destinationFloor: null, isActive: false },
+    { id: 1, currentFloor: 0, destinationFloor: null, status: "available" },
+    { id: 2, currentFloor: 0, destinationFloor: null, status: "available" },
+    { id: 3, currentFloor: 0, destinationFloor: null, status: "available" },
+    { id: 4, currentFloor: 0, destinationFloor: null, status: "available" },
+    { id: 5, currentFloor: 0, destinationFloor: null, status: "available" },
   ],
   buttons: [
     { id: 0, status: "Call" },
@@ -55,12 +39,13 @@ const elevatorSystemSlice = createSlice({
         state.callsQueue.isEmpty = false;
       }
       state.buttons[action.payload].status = "Waiting";
+
       //choose the closest elevetor
       let minDistance = state.buttons.length;
       let bestElevator;
       let currentCall = state.callsQueue.queue.shift();
       state.elevators.forEach((elevator) => {
-        if (!elevator.isActive) {
+        if (elevator.status === "available") {
           let currentElevatorDIstance = Math.abs(
             elevator.currentFloor - currentCall.floor
           );
@@ -71,11 +56,12 @@ const elevatorSystemSlice = createSlice({
         }
       });
 
-      //Closest non active elevator is taking the call
-      state.elevators[bestElevator.id - 1].isActive = true;
-
-      // state.elevators[bestElevator.id].isActive = true;
-      // state.elevators[bestElevator.id].destinationFloor = currentCall.floor;
+      //Closest non active elevator is taking the call, if cover the case that no elevator is available
+      if (bestElevator) {
+        state.elevators[bestElevator.id - 1].status = "active";
+        state.elevators[bestElevator.id - 1].destinationFloor =
+          currentCall.floor;
+      }
     },
 
     elevatorArrived(state) {},

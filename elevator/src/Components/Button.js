@@ -6,7 +6,7 @@ const CallButton = styled.button`
   background-color: ${(props) =>
     props.status === "Call"
       ? "green"
-      : props.status === "Wait"
+      : props.status === "Waiting"
       ? "red"
       : "yellow"};
   border-radius: 8px;
@@ -26,7 +26,7 @@ const CallButton = styled.button`
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  width: 3rem;
+  width: 4rem;
   height: 2rem;
   :hover {
     transform: scale(1.03);
@@ -46,8 +46,8 @@ const Button = function (props) {
       <CallButton status={buttonStatus} id={props.id} onClick={clickHandler}>
         {buttonStatus === "Call"
           ? "Call"
-          : buttonStatus === "Wait"
-          ? "Wait"
+          : buttonStatus === "Waiting"
+          ? "Waiting"
           : "Arrived"}
       </CallButton>
     </>

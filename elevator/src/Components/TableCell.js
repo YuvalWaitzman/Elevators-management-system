@@ -1,6 +1,9 @@
+import keyframes from "styled-components";
 import styled from "styled-components";
-import ElevatorImg from "./ElevatorImg";
+import AnimatedElevatorImg from "./ElevatorImg";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
 import Timer from "./Timer";
 
 const ImgContainer = styled.div`
@@ -16,9 +19,7 @@ const StyledTableCell = styled.td`
 const TableCell = function (props) {
   const elevators = useSelector((state) => state.elevators);
   const buttons = useSelector((state) => state.buttons);
-  // const size = useSelector((state) => state.size);
 
-  //GET THE CURRENT ELEVATOR WITH SLICE (TO ENABLE 2+ DIGIT NUMBER OF ELEVATORS)
   const elevator = elevators[props.elevator - 1];
 
   const checkIfRenderElevator =
@@ -28,12 +29,21 @@ const TableCell = function (props) {
     buttons[props.floor].status === "Waiting" &&
     elevators[props.elevator - 1].destinationFloor == props.floor;
 
+  //Moving images logic here
+
+  // useEffect(() => {}, [elevator.destinationFloor]);
+  const isMoving =
+    elevator.currentFloor !== elevator.destinationFloor &&
+    elevator.destinationFloor;
+
   return (
     <StyledTableCell i={props.floor} j={props.elevator} id={props.id}>
       {checkIfRenderTimer && <Timer />}
       {checkIfRenderElevator && (
         <ImgContainer>
-          <ElevatorImg
+          <AnimatedElevatorImg
+            moving={isMoving}
+            destination={elevator.destinationFloor}
             position={elevator.currentFloor}
             color={
               elevator.status === "available"
@@ -42,7 +52,7 @@ const TableCell = function (props) {
                 ? "red"
                 : "green"
             }
-            id={props.id[1]}
+            id={props.elevator}
           />
         </ImgContainer>
       )}

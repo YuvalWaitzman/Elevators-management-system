@@ -23,13 +23,7 @@ const moveDownTo = (dest) => keyframes`
   }
 `;
 
-const StyledSvg = styled.svg`
-  /* position: absolute;
-  /* top: 100%;
-  left: 50%; */
-  /* transform: translate(-30%, -30%);
-  animation: ${moveUpTo} 1s ease; */ */
-`;
+const StyledSvg = styled.svg``;
 
 export const ElevatorImg = (props) => (
   <StyledSvg

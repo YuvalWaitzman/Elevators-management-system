@@ -2,7 +2,7 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { chooseRandomFromArray } from "../Helpers/helper";
 
 const initialState = {
-  size: { floors: 10, elevators: 5 },
+  size: { floors: 20, elevators: 5 },
   elevators: [],
   buttons: [],
   callsQueue: {

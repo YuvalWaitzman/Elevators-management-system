@@ -7,7 +7,6 @@ const PageWrapper = styled.div`
   background-color: #f2f2f2;
   background-attachment: fixed;
   display: flex;
-  /* position: fixed; */
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -22,6 +21,7 @@ const Container = styled.div`
   height: 80vh;
   margin-top: 70px;
 `;
+
 function App() {
   return (
     <>

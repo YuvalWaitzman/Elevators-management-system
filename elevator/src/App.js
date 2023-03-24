@@ -7,9 +7,11 @@ const PageWrapper = styled.div`
   background-color: #f2f2f2;
   background-attachment: fixed;
   display: flex;
+  /* position: fixed; */
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
 `;
 
 const Container = styled.div`

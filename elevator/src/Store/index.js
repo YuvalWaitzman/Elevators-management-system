@@ -2,31 +2,32 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { chooseRandomFromArray } from "../Helpers/helper";
 
 const initialState = {
-  elevators: [
-    { id: 1, currentFloor: 0, destinationFloor: null, status: "available" },
-    { id: 2, currentFloor: 0, destinationFloor: null, status: "available" },
-    { id: 3, currentFloor: 0, destinationFloor: null, status: "available" },
-    { id: 4, currentFloor: 0, destinationFloor: null, status: "available" },
-    { id: 5, currentFloor: 0, destinationFloor: null, status: "available" },
-  ],
-  buttons: [
-    { id: 0, status: "Call" },
-    { id: 1, status: "Call" },
-    { id: 2, status: "Call" },
-    { id: 3, status: "Call" },
-    { id: 4, status: "Call" },
-    { id: 5, status: "Call" },
-    { id: 6, status: "Call" },
-    { id: 7, status: "Call" },
-    { id: 8, status: "Call" },
-    { id: 9, status: "Call" },
-  ],
-
+  size: { floors: 10, elevators: 5 },
+  elevators: [],
+  buttons: [],
   callsQueue: {
     queue: [],
     isEmpty: true,
   },
 };
+
+// Create elevator objects based on the number of elevators
+for (let i = 1; i <= initialState.size.elevators; i++) {
+  initialState.elevators.push({
+    id: i,
+    currentFloor: 0,
+    destinationFloor: null,
+    status: "available",
+  });
+}
+
+// Create button objects based on the number of floors
+for (let i = 0; i < initialState.size.floors; i++) {
+  initialState.buttons.push({
+    id: i,
+    status: "Call",
+  });
+}
 
 const elevatorSystemSlice = createSlice({
   name: "elevator system",

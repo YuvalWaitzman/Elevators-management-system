@@ -1,5 +1,38 @@
+import styled, { keyframes } from "styled-components";
+
+const moveUpTo = (destination) => keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(100px);
+  }
+`;
+const moveDownTo = (dest) => keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(-100px);
+  }
+`;
+
+const StyledSvg = styled.svg`
+  /* position: absolute;
+  /* top: 100%;
+  left: 50%; */
+  /* transform: translate(-30%, -30%);
+  animation: ${moveUpTo} 1s ease; */ */
+`;
+
 export const ElevatorImg = (props) => (
-  <svg
+  <StyledSvg
     id={props.id}
     width="50"
     height="50"
@@ -18,7 +51,7 @@ export const ElevatorImg = (props) => (
         <rect width="50" height="50" fill="white" />
       </clipPath>
     </defs>
-  </svg>
+  </StyledSvg>
 );
 
 export default ElevatorImg;

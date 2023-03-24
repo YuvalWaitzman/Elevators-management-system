@@ -14,17 +14,18 @@ const StyledTableCell = styled.td`
 
 const TableCell = function (props) {
   const elevators = useSelector((state) => state.elevators);
-  const elevatorStatus = elevators[props.id[1] - 1].status;
+  const elevator = elevators[props.id[1] - 1];
 
   return (
     <StyledTableCell id={props.id}>
       {props.isLastRow && (
         <ImgContainer>
           <ElevatorImg
+            position={elevator.currentFloor}
             color={
-              elevatorStatus === "available"
+              elevator.status === "available"
                 ? "black"
-                : elevatorStatus === "active"
+                : elevator.status === "active"
                 ? "red"
                 : "green"
             }

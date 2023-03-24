@@ -3,7 +3,6 @@ import styled from "styled-components";
 import TableCell from "./TableCell";
 import Button from "../Components/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { elevatorSystemActions } from "../Store/index";
 
 const BuildingContainer = styled.div`
   margin-top: 10px;
@@ -23,14 +22,13 @@ const StyledSpanGround = styled.span`
 `;
 
 let BuildingComp = function () {
-  //Exposing component to each change in state for relevant data from store and creating dispatch function.
   const size = useSelector((state) => state.size);
   const elevators = useSelector((state) => state.elevators);
   const callsQueue = useSelector((state) => state.callsQueue);
   const buttons = useSelector((state) => state.buttons);
   const dispatch = useDispatch();
 
-  //CREATING A NEW BUILDING INSTANCE WITH THE REQUIRED MEASURES
+  //CREATING A NEW BUILDING INSTANCE WITH THE REQUIRED MEASURES FROM STORE
   const building = new Building(size.floors, size.elevators);
   building.initiateElevators();
   for (let i = 0; i < building.floors; i++) {

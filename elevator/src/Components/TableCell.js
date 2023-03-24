@@ -16,23 +16,20 @@ const StyledTableCell = styled.td`
 const TableCell = function (props) {
   const elevators = useSelector((state) => state.elevators);
   const buttons = useSelector((state) => state.buttons);
+  // const size = useSelector((state) => state.size);
 
   //GET THE CURRENT ELEVATOR WITH SLICE (TO ENABLE 2+ DIGIT NUMBER OF ELEVATORS)
+  const elevator = elevators[props.elevator - 1];
 
-  //cell 23
-  const elevator = elevators[props.id.slice(1) - 1];
   const checkIfRenderElevator =
-    elevator.currentFloor + props.id.slice(1) === props.id;
-  console.log(
-    elevators[props.id.slice(1) - 1].destinationFloor,
-    props.id.slice(1)
-  );
+    elevator.currentFloor + props.elevator == props.id;
+
   const checkIfRenderTimer =
-    buttons[props.id[0]].status === "Waiting" &&
-    elevators[props.id.slice(1) - 1].destinationFloor === props.id[0];
+    buttons[props.floor].status === "Waiting" &&
+    elevators[props.elevator - 1].destinationFloor == props.floor;
 
   return (
-    <StyledTableCell id={props.id}>
+    <StyledTableCell i={props.floor} j={props.elevator} id={props.id}>
       {checkIfRenderTimer && <Timer />}
       {checkIfRenderElevator && (
         <ImgContainer>

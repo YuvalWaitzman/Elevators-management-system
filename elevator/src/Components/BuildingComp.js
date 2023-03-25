@@ -55,7 +55,15 @@ let BuildingComp = function () {
     for (let j = 1; j <= building.elevatorsNumber; j++) {
       const cellId = `${i}${j}`;
 
-      cols.push(<TableCell floor={i} elevator={j} id={cellId}></TableCell>);
+      cols.push(
+        <TableCell
+          floor={i}
+          ref={cellRef}
+          heigth={cellHeight}
+          elevator={j}
+          id={cellId}
+        ></TableCell>
+      );
 
       if (j === building.elevatorsNumber) {
         cols.push(building.buttons[i]);

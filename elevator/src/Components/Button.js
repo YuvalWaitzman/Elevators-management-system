@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store/index";
+import { useEffect } from "react";
 
 const CallButton = styled.button`
   background-color: ${(props) =>
@@ -8,9 +9,12 @@ const CallButton = styled.button`
       ? "green"
       : props.status === "Waiting"
       ? "red"
-      : "yellow"};
+      : "white"};
   border-radius: 8px;
-  color: white;
+  border-color: ${(props) =>
+    props.status === "Call" || props.status === "Arrived" ? "green" : "red"};
+  color: ${(props) =>
+    props.status === "Call" || props.status === "Waiting" ? "white" : "green"};
   margin-right: 4px;
   margin-left: 8px;
   margin-top: 15px;
@@ -20,8 +24,10 @@ const CallButton = styled.button`
   align-items: center;
   flex-direction: row;
   text-align: center;
+  font-weight: ${(props) =>
+    props.status === "Call" || props.status === "Waiting" ? "normal" : "bold"};
   transition: all 250ms;
-  border: 0;
+  border: 2;
   font-size: 12px;
   user-select: none;
   -webkit-user-select: none;

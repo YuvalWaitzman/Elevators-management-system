@@ -45,12 +45,35 @@ const elevatorSystemSlice = createSlice({
       }
       state.buttons[action.payload].status = "Waiting";
 
-      //CHOOSE BEST ELEVATOR
-
       let minDistance = state.buttons.length;
       let bestElevators = [];
       let bestElevator;
       let currentCall = state.callsQueue.queue.shift();
+
+      // CASE ONE OF THE ELEVATORS IN THE FLOOR
+      // state.elevators.forEach((elevator) => {
+      //   if (elevator.status === "available") {
+      //     if (elevator.currentFloor === currentCall.floor) {
+      //       bestElevators.push(elevator);
+      //     }
+      //   }
+      // });
+      // if (bestElevators.length > 1) {
+      //   bestElevator = chooseRandomFromArray(bestElevators);
+      // }
+      // if (bestElevators.length === 1) {
+      //   [bestElevator] = bestElevators;
+      // }
+
+      // if (bestElevator) {
+      //   state.elevators[bestElevator.id - 1].status = "Arrived";
+
+      //   // state.elevators[bestElevator.id - 1].destinationFloor =
+      //   //   currentCall.floor;
+      //   return;
+      // }
+
+      //CHOOSE BEST ELEVATOR
 
       state.elevators.forEach((elevator) => {
         if (elevator.status === "available") {

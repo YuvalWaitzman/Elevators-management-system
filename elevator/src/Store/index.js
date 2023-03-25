@@ -46,7 +46,7 @@ const elevatorSystemSlice = createSlice({
       let minDistance = state.buttons.length;
       let bestElevators = [];
       let bestElevator;
-      let currentCall = state.callsQueue.queue[0];
+      let currentCall = state.callsQueue.queue.shift();
       state.elevators.forEach((elevator) => {
         if (elevator.status === "available") {
           let currentElevatorDIstance = Math.abs(
@@ -86,7 +86,7 @@ const elevatorSystemSlice = createSlice({
       state.buttons[action.payload.button].status = "Arrived";
     },
 
-    changeElevatorStatus(state, action) {
+    changeStatusAfterTwoSec(state, action) {
       state.elevators[action.payload.elevator - 1].status = "available";
       state.buttons[action.payload.button].status = "Call";
       console.log("2 seconds passed");

@@ -39,7 +39,7 @@ const TableCell = function (props) {
 
   const difference = () => {
     if (isMoving) {
-      return Math.abs(elevator.destinationFloor - elevator.currentFloor) * 100;
+      return (elevator.destinationFloor - elevator.currentFloor) * 100;
     } else {
       return 0;
     }

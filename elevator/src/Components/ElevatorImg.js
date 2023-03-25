@@ -1,25 +1,49 @@
 import styled, { keyframes } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { elevatorSystemActions } from "../Store";
 
-const moveElevator = keyframes`
-0% {
-  transform: translateY(0);
-}
-100% {
-  transform: translateY(-400%);
-}
+// const moveElevator = (dif) => keyframes`
+// 0% {
+//   transform: translateY(0);
+// }
+// 100% {
+//   transform: translateY(${dif > 0 ? "-" : ""}+${Math.abs(dif)}+"%")
+// }
+// `;
+
+const moveElevator = (x) => keyframes`
+ 0% {
+   transform: translateY(0);
+ }
+ 100% {
+  transform: translateY(-${x}%)} 
 `;
 
 const AnimatedElevatorImg = styled.svg`
-  animation: ${moveElevator} 2.5s linear;
+  animation: ${(props) => moveElevator(props.difference)} 2.5s linear;
   animation-fill-mode: forwards;
   animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
 `;
 export const ElevatorImg = (props) => {
+  const elevators = useSelector((state) => state.elevators);
+  const dispatch = useDispatch();
+  const handleAnimationEnd = () => {
+    dispatch(
+      elevatorSystemActions.elevatorArrived({
+        elevator: props.id,
+        button: props.buttonId,
+      })
+    );
+  };
+
   return (
     <AnimatedElevatorImg
+      buttonId={props.position}
+      onAnimationEnd={handleAnimationEnd}
+      difference={props.difference}
       moving={props.moving}
       id={props.id}
-      width="50"
+      width="40"
       height="50"
       viewBox="0 0 50 50"
       fill="none"

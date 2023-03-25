@@ -2,38 +2,43 @@ import styled, { keyframes } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { elevatorSystemActions } from "../Store";
 
-// const moveElevator = (dif) => keyframes`
-// 0% {
-//   transform: translateY(0);
-// }
-// 100% {
-//   transform: translateY(${dif > 0 ? "-" : ""}+${Math.abs(dif)}+"%")
-// }
-// `;
-
-const moveElevator = (x) => keyframes`
- 0% {
-   transform: translateY(0);
- }
- 100% {
-  transform: translateY(-${x}%)} 
-`;
+const moveElevator = (x) =>
+  keyframes`
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(${x < 0 ? "" : "-"}${Math.abs(x)}%);
+    }
+  `;
 
 const AnimatedElevatorImg = styled.svg`
   animation: ${(props) => moveElevator(props.difference)} 2.5s linear;
   animation-fill-mode: forwards;
   animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
 `;
+
 export const ElevatorImg = (props) => {
   const elevators = useSelector((state) => state.elevators);
+  const buttons = useSelector((state) => state.buttons);
   const dispatch = useDispatch();
+
   const handleAnimationEnd = () => {
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,
-        button: props.buttonId,
+        button: Number(props.destination),
       })
     );
+
+    setTimeout(() => {
+      dispatch(
+        elevatorSystemActions.changeStatusAfterTwoSec({
+          elevator: props.id,
+          button: Number(props.destination),
+        })
+      );
+    }, 2000);
   };
 
   return (

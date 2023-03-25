@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store/index";
+import { useEffect } from "react";
+import { chooseRandomFromArray } from "../Helpers/helper";
 
 const CallButton = styled.button`
   background-color: ${(props) =>
@@ -8,9 +10,12 @@ const CallButton = styled.button`
       ? "green"
       : props.status === "Waiting"
       ? "red"
-      : "yellow"};
+      : "white"};
   border-radius: 8px;
-  color: white;
+  border-color: ${(props) =>
+    props.status === "Call" || props.status === "Arrived" ? "green" : "red"};
+  color: ${(props) =>
+    props.status === "Call" || props.status === "Waiting" ? "white" : "green"};
   margin-right: 4px;
   margin-left: 8px;
   margin-top: 15px;
@@ -20,8 +25,10 @@ const CallButton = styled.button`
   align-items: center;
   flex-direction: row;
   text-align: center;
+  font-weight: ${(props) =>
+    props.status === "Call" || props.status === "Waiting" ? "normal" : "bold"};
   transition: all 250ms;
-  border: 0;
+  border: 2;
   font-size: 12px;
   user-select: none;
   -webkit-user-select: none;
@@ -34,10 +41,46 @@ const CallButton = styled.button`
 `;
 const Button = function (props) {
   const buttons = useSelector((state) => state.buttons);
+  const elevators = useSelector((state) => state.elevators);
+
   const dispatch = useDispatch();
 
   const clickHandler = () => {
-    dispatch(elevatorSystemActions.createCall(props.id));
+    //special case trigger the elevator arrived reducer
+    let elevatorsInSameFloor = [];
+    let chosenElevator;
+    elevators.forEach((elevator) => {
+      if (
+        elevator.currentFloor === props.id &&
+        elevator.status === "available"
+      ) {
+        elevatorsInSameFloor.push(elevator);
+      }
+    });
+    if (elevatorsInSameFloor.length === 1) {
+      [chosenElevator] = elevatorsInSameFloor;
+    }
+    if (elevatorsInSameFloor.length > 1) {
+      chosenElevator = chooseRandomFromArray(elevatorsInSameFloor);
+    }
+    if (chosenElevator) {
+      dispatch(
+        elevatorSystemActions.elevatorArrivedSameFloor({
+          elevator: chosenElevator.id,
+          button: props.id,
+        })
+      );
+      setTimeout(() => {
+        dispatch(
+          elevatorSystemActions.changeStatusAfterTwoSec({
+            elevator: chosenElevator.id,
+            button: props.id,
+          })
+        );
+      }, 2000);
+    } else {
+      dispatch(elevatorSystemActions.createCall(props.id));
+    }
   };
   let buttonStatus = buttons[props.id].status;
 

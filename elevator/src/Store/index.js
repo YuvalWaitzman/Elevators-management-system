@@ -1,8 +1,8 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import Elevator from "../Classes/Elevator";
 import { chooseRandomFromArray } from "../Helpers/helper";
 import sound from "../ding-47489.mp3";
 const audio = new Audio(sound);
+
 const initialState = {
   size: { floors: 10, elevators: 5 },
   elevators: [],
@@ -49,6 +49,9 @@ const elevatorSystemSlice = createSlice({
       let bestElevators = [];
       let bestElevator;
       let currentCall = state.callsQueue.queue.shift();
+      if (state.callsQueue.queue.length === 0) {
+        state.callsQueue.isEmpty = true;
+      }
 
       state.elevators.forEach((elevator) => {
         if (elevator.status === "available") {

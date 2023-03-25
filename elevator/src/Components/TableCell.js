@@ -27,8 +27,12 @@ const TableCell = function (props) {
     elevator.currentFloor + props.elevator == props.id;
 
   //WRITE EXPLANATION
+  // 0 and null are equal and first line renders timer
+  console.log(elevators[props.elevator - 1].destinationFloor, props.floor);
   const checkIfRenderTimer =
-    buttons[props.floor].status === "Waiting" &&
+    // elevators[props.elevator - 1].destinationFloor !== null &&
+
+    ///////CHECK LOGIC
     elevators[props.elevator - 1].destinationFloor == props.floor;
 
   //Moving images logic here

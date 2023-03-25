@@ -78,23 +78,18 @@ const elevatorSystemSlice = createSlice({
     },
 
     elevatorArrived(state, action) {
-      //  1. PRESENT TIME PASSED FROM BUTTON PUSHED
-      //  2. CHANGE COLOR OF ELEVATOR
-
       state.elevators[action.payload.elevator - 1].status = "idle";
       state.elevators[action.payload.elevator - 1].currentFloor =
         state.elevators[action.payload.elevator - 1].destinationFloor;
-      state.elevators[action.payload.elevator - 1].destinationFloor = null;
 
-      console.log(action.payload);
-      //  3. SOUND EFFECT WHEN REACHING THE FLOOR
-      const audio = new Audio("elevatording-47489.mp3");
-      audio.play();
-      //  4. 2 SECONDS OF REMAINING IN ARRIVED STATUS BEFORE MOVING TO AVAILABLE
-      // setTimeout(() => {
-      //   state.elevators[action.payload.elevator - 1].status = "available";
-      // }, 2000);
-      //  5.SETTING DESTINATION FIELD TO NULL WHILE RESTING
+      state.elevators[action.payload.elevator - 1].destinationFloor = null;
+      state.buttons[action.payload.button].status = "Arrived";
+    },
+
+    changeElevatorStatus(state, action) {
+      state.elevators[action.payload.elevator - 1].status = "available";
+      state.buttons[action.payload.button].status = "Call";
+      console.log("2 seconds passed");
     },
   },
 });

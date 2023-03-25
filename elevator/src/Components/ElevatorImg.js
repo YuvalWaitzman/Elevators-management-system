@@ -26,14 +26,25 @@ const AnimatedElevatorImg = styled.svg`
 `;
 export const ElevatorImg = (props) => {
   const elevators = useSelector((state) => state.elevators);
+  const buttons = useSelector((state) => state.buttons);
   const dispatch = useDispatch();
+
   const handleAnimationEnd = () => {
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,
-        button: props.buttonId,
+        button: Number(props.destination),
       })
     );
+
+    setTimeout(() => {
+      dispatch(
+        elevatorSystemActions.changeElevatorStatus({
+          elevator: props.id,
+          button: Number(props.destination),
+        })
+      );
+    }, 2000);
   };
 
   return (

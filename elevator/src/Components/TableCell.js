@@ -12,8 +12,8 @@ const ImgContainer = styled.div`
 const StyledTableCell = styled.td`
   border: 1px solid #a8a8a8;
   /* height: 40px; */
-  min-width: 100px;
-  min-height: 40px;
+  width: 100px;
+  height: 40px;
   vertical-align: tip;
 `;
 

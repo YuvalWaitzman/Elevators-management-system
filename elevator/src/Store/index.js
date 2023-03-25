@@ -2,7 +2,7 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 import Elevator from "../Classes/Elevator";
 import { chooseRandomFromArray } from "../Helpers/helper";
 import sound from "../ding-47489.mp3";
-
+const audio = new Audio(sound);
 const initialState = {
   size: { floors: 10, elevators: 5 },
   elevators: [],
@@ -50,31 +50,6 @@ const elevatorSystemSlice = createSlice({
       let bestElevator;
       let currentCall = state.callsQueue.queue.shift();
 
-      // CASE ONE OF THE ELEVATORS IN THE FLOOR
-      // state.elevators.forEach((elevator) => {
-      //   if (elevator.status === "available") {
-      //     if (elevator.currentFloor === currentCall.floor) {
-      //       bestElevators.push(elevator);
-      //     }
-      //   }
-      // });
-      // if (bestElevators.length > 1) {
-      //   bestElevator = chooseRandomFromArray(bestElevators);
-      // }
-      // if (bestElevators.length === 1) {
-      //   [bestElevator] = bestElevators;
-      // }
-
-      // if (bestElevator) {
-      //   state.elevators[bestElevator.id - 1].status = "Arrived";
-
-      //   // state.elevators[bestElevator.id - 1].destinationFloor =
-      //   //   currentCall.floor;
-      //   return;
-      // }
-
-      //CHOOSE BEST ELEVATOR
-
       state.elevators.forEach((elevator) => {
         if (elevator.status === "available") {
           let currentElevatorDistance = Math.abs(
@@ -105,6 +80,11 @@ const elevatorSystemSlice = createSlice({
           currentCall.floor;
       }
     },
+    elevatorArrivedSameFloor(state, action) {
+      state.elevators[action.payload.elevator - 1].status = "idle";
+      state.buttons[action.payload.button].status = "Arrived";
+      audio.play();
+    },
 
     elevatorArrived(state, action) {
       state.elevators[action.payload.elevator - 1].status = "idle";
@@ -115,7 +95,6 @@ const elevatorSystemSlice = createSlice({
       state.buttons[action.payload.button].status = "Arrived";
 
       // SOUND FILE SERVED FROM HTTP SERVER
-      const audio = new Audio(sound);
       audio.play();
     },
 

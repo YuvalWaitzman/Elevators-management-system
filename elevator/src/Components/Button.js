@@ -65,7 +65,7 @@ const Button = function (props) {
     }
     if (chosenElevator) {
       dispatch(
-        elevatorSystemActions.elevatorArrived({
+        elevatorSystemActions.elevatorArrivedSameFloor({
           elevator: chosenElevator.id,
           button: props.id,
         })

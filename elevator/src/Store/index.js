@@ -1,6 +1,7 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 import Elevator from "../Classes/Elevator";
 import { chooseRandomFromArray } from "../Helpers/helper";
+import sound from "../ding-47489.mp3";
 
 const initialState = {
   size: { floors: 10, elevators: 5 },
@@ -36,25 +37,31 @@ const elevatorSystemSlice = createSlice({
   reducers: {
     createCall(state, action) {
       const newCall = { timeStamp: Date.now(), floor: action.payload };
+
       state.callsQueue.queue.push(newCall);
+      console.log(state.callsQueue.queue);
       if (state.callsQueue.isEmpty) {
         state.callsQueue.isEmpty = false;
       }
       state.buttons[action.payload].status = "Waiting";
 
       //CHOOSE BEST ELEVATOR
+
       let minDistance = state.buttons.length;
       let bestElevators = [];
       let bestElevator;
       let currentCall = state.callsQueue.queue.shift();
+
       state.elevators.forEach((elevator) => {
         if (elevator.status === "available") {
-          let currentElevatorDIstance = Math.abs(
+          let currentElevatorDistance = Math.abs(
             elevator.currentFloor - currentCall.floor
           );
-          if (currentElevatorDIstance <= minDistance) {
-            minDistance = currentElevatorDIstance;
-            bestElevators.push(elevator);
+          if (currentElevatorDistance < minDistance) {
+            minDistance = currentElevatorDistance;
+            bestElevators = [elevator]; // clear the array and add the current elevator
+          } else if (currentElevatorDistance === minDistance) {
+            bestElevators.push(elevator); // add the current elevator to the array
           }
         }
       });
@@ -70,7 +77,6 @@ const elevatorSystemSlice = createSlice({
 
       //CHOSEN ELEVATOR IS TAKING THE CALL
       if (bestElevator) {
-        state.callsQueue.queue.shift();
         state.elevators[bestElevator.id - 1].status = "active";
         state.elevators[bestElevator.id - 1].destinationFloor =
           currentCall.floor;
@@ -84,12 +90,15 @@ const elevatorSystemSlice = createSlice({
 
       state.elevators[action.payload.elevator - 1].destinationFloor = null;
       state.buttons[action.payload.button].status = "Arrived";
+
+      // SOUND FILE SERVED FROM HTTP SERVER
+      const audio = new Audio(sound);
+      audio.play();
     },
 
     changeStatusAfterTwoSec(state, action) {
       state.elevators[action.payload.elevator - 1].status = "available";
       state.buttons[action.payload.button].status = "Call";
-      console.log("2 seconds passed");
     },
   },
 });

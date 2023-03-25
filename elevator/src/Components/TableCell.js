@@ -13,7 +13,7 @@ const StyledTableCell = styled.td`
   border: 1px solid #a8a8a8;
   /* height: 40px; */
   width: 100px;
-  height: 40px;
+  height: 54px;
   vertical-align: tip;
 `;
 
@@ -39,7 +39,7 @@ const TableCell = function (props) {
 
   const difference = () => {
     if (isMoving) {
-      return (elevator.destinationFloor - elevator.currentFloor) * 100;
+      return (elevator.destinationFloor - elevator.currentFloor) * 118;
     } else {
       return 0;
     }

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store/index";
 import { useEffect } from "react";
+import { chooseRandomFromArray } from "../Helpers/helper";
 
 const CallButton = styled.button`
   background-color: ${(props) =>
@@ -40,10 +41,46 @@ const CallButton = styled.button`
 `;
 const Button = function (props) {
   const buttons = useSelector((state) => state.buttons);
+  const elevators = useSelector((state) => state.elevators);
+
   const dispatch = useDispatch();
 
   const clickHandler = () => {
-    dispatch(elevatorSystemActions.createCall(props.id));
+    //special case trigger the elevator arrived reducer
+    let elevatorsInSameFloor = [];
+    let chosenElevator;
+    elevators.forEach((elevator) => {
+      if (
+        elevator.currentFloor === props.id &&
+        elevator.status === "available"
+      ) {
+        elevatorsInSameFloor.push(elevator);
+      }
+    });
+    if (elevatorsInSameFloor.length === 1) {
+      [chosenElevator] = elevatorsInSameFloor;
+    }
+    if (elevatorsInSameFloor.length > 1) {
+      chosenElevator = chooseRandomFromArray(elevatorsInSameFloor);
+    }
+    if (chosenElevator) {
+      dispatch(
+        elevatorSystemActions.elevatorArrived({
+          elevator: chosenElevator.id,
+          button: props.id,
+        })
+      );
+      setTimeout(() => {
+        dispatch(
+          elevatorSystemActions.changeStatusAfterTwoSec({
+            elevator: chosenElevator.id,
+            button: props.id,
+          })
+        );
+      }, 2000);
+    } else {
+      dispatch(elevatorSystemActions.createCall(props.id));
+    }
   };
   let buttonStatus = buttons[props.id].status;
 

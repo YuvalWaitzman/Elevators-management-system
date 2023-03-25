@@ -2,22 +2,6 @@ import styled, { keyframes } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { elevatorSystemActions } from "../Store";
 
-// const moveElevator = (dif) => keyframes`
-// 0% {
-//   transform: translateY(0);
-// }
-// 100% {
-//   transform: translateY(${dif > 0 ? "-" : ""}+${Math.abs(dif)}+"%")
-// }
-// `;
-/* 
-const moveElevator = (x) => keyframes`
- 0% {
-   transform: translateY(0);
- }
- 100% {
-  transform: translateY(-${x}%)} 
-`; */
 const moveElevator = (x) =>
   keyframes`
     0% {
@@ -33,6 +17,7 @@ const AnimatedElevatorImg = styled.svg`
   animation-fill-mode: forwards;
   animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
 `;
+
 export const ElevatorImg = (props) => {
   const elevators = useSelector((state) => state.elevators);
   const buttons = useSelector((state) => state.buttons);

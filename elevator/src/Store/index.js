@@ -36,11 +36,9 @@ const elevatorSystemSlice = createSlice({
   initialState,
   reducers: {
     createCall(state, action) {
-      console.log("createcall");
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
       state.callsQueue.queue.push(newCall);
-      console.log(state.callsQueue.queue);
       if (state.callsQueue.isEmpty) {
         state.callsQueue.isEmpty = false;
       }
@@ -82,6 +80,8 @@ const elevatorSystemSlice = createSlice({
         state.elevators[bestElevator.id - 1].status = "active";
         state.elevators[bestElevator.id - 1].destinationFloor =
           currentCall.floor;
+      } else {
+        state.callsQueue.queue[0];
       }
     },
     elevatorArrivedSameFloor(state, action) {

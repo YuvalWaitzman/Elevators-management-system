@@ -15,7 +15,7 @@ const moveElevator = (x) =>
 const AnimatedElevatorImg = styled.svg`
   animation: ${(props) => moveElevator(props.difference)} 2s linear;
   animation-fill-mode: forwards;
-  /* animation-duration: ${(props) => props.difference / 1}; */
+
   animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
 `;
 
@@ -23,6 +23,7 @@ export const ElevatorImg = (props) => {
   const dispatch = useDispatch();
 
   const handleAnimationEnd = () => {
+    console.log("endofa");
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,

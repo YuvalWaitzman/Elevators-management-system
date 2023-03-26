@@ -47,41 +47,40 @@ const Button = function (props) {
 
   const clickHandler = () => {
     //special case trigger the elevator arrived reducer
-    let elevatorsInSameFloor = [];
-    let chosenElevator;
-    elevators.forEach((elevator) => {
-      if (
-        Number(elevator.currentFloor) === Number(props.id) &&
-        elevator.status === "available"
-      ) {
-        elevatorsInSameFloor.push(elevator);
-      }
-    });
-    if (elevatorsInSameFloor.length === 1) {
-      [chosenElevator] = elevatorsInSameFloor;
-    }
-    if (elevatorsInSameFloor.length > 1) {
-      chosenElevator = chooseRandomFromArray(elevatorsInSameFloor);
-    }
-    if (chosenElevator) {
-      dispatch(
-        elevatorSystemActions.elevatorArrivedSameFloor({
-          elevator: chosenElevator.id,
-          button: props.id,
-        })
-      );
-      setTimeout(() => {
-        dispatch(
-          elevatorSystemActions.changeStatusAfterTwoSec({
-            elevator: chosenElevator.id,
-            button: props.id,
-          })
-        );
-      }, 2000);
-    } else {
-      console.log("samc");
-      dispatch(elevatorSystemActions.createCall(props.id));
-    }
+    // let elevatorsInSameFloor = [];
+    // let chosenElevator;
+    // elevators.forEach((elevator) => {
+    //   if (
+    //     Number(elevator.currentFloor) === Number(props.id) &&
+    //     elevator.status === "available"
+    //   ) {
+    //     elevatorsInSameFloor.push(elevator);
+    //   }
+    // });
+    // if (elevatorsInSameFloor.length === 1) {
+    //   [chosenElevator] = elevatorsInSameFloor;
+    // }
+    // if (elevatorsInSameFloor.length > 1) {
+    //   chosenElevator = chooseRandomFromArray(elevatorsInSameFloor);
+    // }
+    // if (chosenElevator) {
+    // dispatch(
+    //   elevatorSystemActions.elevatorArrivedSameFloor({
+    //     elevator: chosenElevator.id,
+    //     button: props.id,
+    //   })
+    // );
+    // setTimeout(() => {
+    //   dispatch(
+    //     elevatorSystemActions.changeStatusAfterTwoSec({
+    //       elevator: chosenElevator.id,
+    //       button: props.id,
+    //     })
+    //   );
+    // }, 2000);
+    // } else {
+    dispatch(elevatorSystemActions.createCall(props.id));
+    // }
   };
 
   return (

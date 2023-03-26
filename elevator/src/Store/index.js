@@ -3,6 +3,7 @@ import { chooseRandomFromArray } from "../Helpers/helper";
 import sound from "../ding-47489.mp3";
 const audio = new Audio(sound);
 
+//Defining initial state values
 const initialState = {
   size: { floors: 10, elevators: 5 },
   elevators: [],
@@ -12,7 +13,7 @@ const initialState = {
   occupiedElevatorsCounter: 0,
 };
 
-// Create elevator objects based on the number of elevators
+// Creating elevator objects according to the the number of elevators from initial state
 for (let i = 1; i <= initialState.size.elevators; i++) {
   initialState.elevators.push({
     id: i,
@@ -22,7 +23,7 @@ for (let i = 1; i <= initialState.size.elevators; i++) {
   });
 }
 
-//CREATE BUTTON OBJECTS BASED ON NUMBER OF FLOORS
+//Creating button objects according to the number of floors from initial state
 for (let i = 0; i < initialState.size.floors; i++) {
   initialState.buttons.push({
     id: i,
@@ -30,20 +31,21 @@ for (let i = 0; i < initialState.size.floors; i++) {
   });
 }
 
+//Creating elevator system slice - with 5 reducers
 const elevatorSystemSlice = createSlice({
   name: "elevator system",
   initialState,
   reducers: {
+    // Creating a call object and inserting into the queue - trigerred with a click on one of the buttons
     createCall(state, action) {
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
       state.callQueue.push(newCall);
-      if (state.callQueue.isEmpty) {
-        state.callQueue.isEmpty = false;
-      }
+
       state.buttons[action.payload].status = "Waiting";
     },
 
+    // Choosing the available elevator with the min distance from requested floor
     assignElevator(state, action) {
       let minDistance = state.buttons.length;
       let bestElevators = [];
@@ -63,23 +65,21 @@ const elevatorSystemSlice = createSlice({
           }
         }
       });
-      //TODO: unite 2 cases
-      bestElevator = chooseRandomFromArray(bestElevators);
-      //CHOSEN ELEVATOR IS TAKING THE CALL
 
+      bestElevator = chooseRandomFromArray(bestElevators);
+
+      //Chosen elevator is taking the call + updating the occupied elevators counter
       state.elevators[bestElevator.id - 1].status = "active";
       state.occupiedElevatorsCounter++;
+
+      //If all elevators are occupied - updating any elevator available to false
       if (state.occupiedElevatorsCounter === state.elevators.length) {
         state.anyElevatorAvailable = false;
       }
       state.elevators[bestElevator.id - 1].destinationFloor = currentCall.floor;
     },
-    elevatorArrivedSameFloor(state, action) {
-      state.elevators[action.payload.elevator - 1].status = "idle";
-      state.buttons[action.payload.button].status = "Arrived";
-      audio.play();
-    },
 
+    //Animation end triggers this reducer - which responsible for changing status, updating floor fields and for the sound effect
     elevatorArrived(state, action) {
       state.elevators[action.payload.elevator - 1].status = "idle";
       state.elevators[action.payload.elevator - 1].currentFloor =
@@ -91,6 +91,7 @@ const elevatorSystemSlice = createSlice({
       audio.play();
     },
 
+    //Triggered with setTimeout function
     changeStatusAfterTwoSec(state, action) {
       state.elevators[action.payload.elevator - 1].status = "available";
       state.occupiedElevatorsCounter--;
@@ -98,10 +99,7 @@ const elevatorSystemSlice = createSlice({
       state.buttons[action.payload.button].status = "Call";
     },
 
-    // updateCallQueue(state, action) {
-    //   state.callQueue = action.payload;
-    // },
-
+    //Taking the call out of the queue after process has finished
     dequeue(state) {
       const newQueue = state.callQueue.slice(1);
       state.callQueue = newQueue;

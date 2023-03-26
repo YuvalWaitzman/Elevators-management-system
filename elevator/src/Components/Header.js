@@ -13,7 +13,7 @@ const StyledHeader = styled.h1`
     "Lucida Sans Unicode", "Geneva", Verdana, sans-serif;
   margin-bottom: 2rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-  height: 30px;
+  height: 20px;
 `;
 
 const Header = function () {

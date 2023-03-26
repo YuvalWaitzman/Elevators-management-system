@@ -1,8 +1,7 @@
-import keyframes from "styled-components";
 import styled from "styled-components";
-import AnimatedElevatorImg from "./ElevatorImg";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Timer from "./Timer";
+import Elevator from "./Elevator";
 
 const ImgContainer = styled.div`
   text-align: center;
@@ -19,34 +18,35 @@ const StyledTableCell = styled.td`
 
 const TableCell = function (props) {
   const elevators = useSelector((state) => state.elevators);
-  const buttons = useSelector((state) => state.buttons);
 
+  //Elevator relevant to this table cell
   const elevator = elevators[props.elevator - 1];
-  //WRITE EXPLANATION
-  const checkIfRenderElevator =
-    elevator.currentFloor + props.elevator == props.id;
 
-  //WRITE EXPLANATION
-  // 0 and null are equal and first line renders timer
-  // console.log(elevators[props.elevator - 1].destinationFloor, props.floor);
+  const checkIfRenderElevator =
+    String(elevator.currentFloor) + String(props.elevator) === props.id;
+
   const checkIfRenderTimer =
-    elevators[props.elevator - 1].status === "active" &&
-    elevators[props.elevator - 1].destinationFloor == props.floor;
+    elevators[props.elevator - 1].status === "occupied" &&
+    Number(elevators[props.elevator - 1].destinationFloor) ==
+      Number(props.floor) &&
+    elevators[props.elevator - 1].currentFloor !== props.floor;
 
   //Moving images logic here
 
-  const isMoving =
-    elevator.currentFloor !== elevator.destinationFloor &&
-    elevator.status === "active";
+  const shouldMove = elevator.status === "occupied";
+  console.log("should move?", shouldMove, props.id);
+
+  const isElevatorInSameFloor =
+    Number(elevators[props.elevator - 1].currentFloor) === Number(props.floor);
+
   // elevator.destinationFloor &&
   // elevator.currentFloor !== elevator.destinationFloor;
-
   const difference = () => {
-    if (isMoving) {
-      return (elevator.destinationFloor - elevator.currentFloor) * 118;
-    } else {
-      return 0;
-    }
+    console.log(
+      "differnce between destination and current",
+      (elevator.destinationFloor - elevator.currentFloor) * 118
+    );
+    return (elevator.destinationFloor - elevator.currentFloor) * 118;
   };
 
   return (
@@ -54,20 +54,19 @@ const TableCell = function (props) {
       floor={props.floor}
       elevator={props.elevator}
       id={props.id}
-      height={props.height}
     >
-      {isMoving && checkIfRenderTimer && <Timer />}
+      {!isElevatorInSameFloor && shouldMove && checkIfRenderTimer && <Timer />}
       {checkIfRenderElevator && (
         <ImgContainer>
-          <AnimatedElevatorImg
+          <Elevator
             difference={difference()}
-            moving={isMoving}
+            moving={shouldMove}
             destination={elevator.destinationFloor}
-            position={elevator.currentFloor}
+            currentFloor={elevator.currentFloor}
             color={
               elevator.status === "available"
                 ? "black"
-                : elevator.status === "active"
+                : elevator.status === "occupied"
                 ? "red"
                 : "green"
             }

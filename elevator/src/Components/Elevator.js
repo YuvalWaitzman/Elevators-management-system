@@ -1,34 +1,35 @@
 import styled, { keyframes } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store";
 
-const moveElevator = (x) =>
-  keyframes`
+const AnimatedElevatorImg = styled.svg`
+  animation: ${(props) => moveElevator(props.difference)} 2s linear;
+  animation-fill-mode: forwards;
+  animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
+`;
+
+const moveElevator = (x) => {
+  console.log("move elevator");
+  return keyframes`
     0% {
       transform: translateY(0);
     }
     100% {
       transform: translateY(${x < 0 ? "" : "-"}${Math.abs(x)}%);
     }
+
   `;
+};
 
-const AnimatedElevatorImg = styled.svg`
-  animation: ${(props) => moveElevator(props.difference)} 2s linear;
-  animation-fill-mode: forwards;
-  /* animation-duration: ${(props) => props.difference / 1}; */
-  animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
-`;
-
-export const ElevatorImg = (props) => {
-  const elevators = useSelector((state) => state.elevators);
-  const buttons = useSelector((state) => state.buttons);
+export const Elevator = (props) => {
+  console.log("Image component render ");
   const dispatch = useDispatch();
-
   const handleAnimationEnd = () => {
+    console.log("end of animation");
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,
-        button: Number(props.destination),
+        button: props.destination,
       })
     );
 
@@ -36,15 +37,14 @@ export const ElevatorImg = (props) => {
       dispatch(
         elevatorSystemActions.changeStatusAfterTwoSec({
           elevator: props.id,
-          button: Number(props.destination),
+          button: props.destination,
         })
       );
     }, 2000);
   };
-
+  console.log("is moving", props.moving);
   return (
     <AnimatedElevatorImg
-      buttonId={props.position}
       onAnimationEnd={handleAnimationEnd}
       difference={props.difference}
       moving={props.moving}
@@ -70,4 +70,4 @@ export const ElevatorImg = (props) => {
   );
 };
 
-export default ElevatorImg;
+export default Elevator;

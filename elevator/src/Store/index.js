@@ -3,17 +3,17 @@ import { chooseRandomFromArray } from "../Helpers/helper";
 import sound from "../ding-47489.mp3";
 const audio = new Audio(sound);
 
+//Defining initial state values
 const initialState = {
   size: { floors: 10, elevators: 5 },
   elevators: [],
   buttons: [],
-  callsQueue: {
-    queue: [],
-    isEmpty: true,
-  },
+  callQueue: [],
+  anyElevatorAvailable: true,
+  occupiedElevatorsCounter: 0,
 };
 
-// Create elevator objects based on the number of elevators
+// Creating elevator objects according to the the number of elevators from initial state
 for (let i = 1; i <= initialState.size.elevators; i++) {
   initialState.elevators.push({
     id: i,
@@ -23,7 +23,7 @@ for (let i = 1; i <= initialState.size.elevators; i++) {
   });
 }
 
-//CREATE BUTTOM OBJECTS BASED ON NUMBER OF FLOORS
+//Creating button objects according to the number of floors from initial state
 for (let i = 0; i < initialState.size.floors; i++) {
   initialState.buttons.push({
     id: i,
@@ -31,28 +31,28 @@ for (let i = 0; i < initialState.size.floors; i++) {
   });
 }
 
+//Creating elevator system slice - with 5 reducers
 const elevatorSystemSlice = createSlice({
   name: "elevator system",
   initialState,
   reducers: {
+    // Creating a call object and inserting into the queue - trigerred with a click on one of the buttons
     createCall(state, action) {
-      console.log("createcall");
+      console.log("call created");
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
-      state.callsQueue.queue.push(newCall);
-      console.log(state.callsQueue.queue);
-      if (state.callsQueue.isEmpty) {
-        state.callsQueue.isEmpty = false;
-      }
-      state.buttons[action.payload].status = "Waiting";
+      state.callQueue.push(newCall);
 
+      state.buttons[action.payload].status = "Waiting";
+    },
+
+    // Choosing the available elevator with the min distance from requested floor
+    assignElevator(state, action) {
+      console.log("assignin elevator process starting..");
       let minDistance = state.buttons.length;
       let bestElevators = [];
       let bestElevator;
-      let currentCall = state.callsQueue.queue.shift();
-      if (state.callsQueue.queue.length === 0) {
-        state.callsQueue.isEmpty = true;
-      }
+      let currentCall = action.payload;
 
       state.elevators.forEach((elevator) => {
         if (elevator.status === "available") {
@@ -68,30 +68,23 @@ const elevatorSystemSlice = createSlice({
         }
       });
 
-      //CASE ONE AVAILABLE BEST ELEVATOR
-      if (bestElevators.length === 1) {
-        [bestElevator] = bestElevators;
-      }
-      //CASE MORE THAN ONE AVAILABLE BEST ELEVATOR
-      if (bestElevators.length > 1) {
-        bestElevator = chooseRandomFromArray(bestElevators);
-      }
+      bestElevator = chooseRandomFromArray(bestElevators);
 
-      //CHOSEN ELEVATOR IS TAKING THE CALL
-      if (bestElevator) {
-        state.elevators[bestElevator.id - 1].status = "active";
-        state.elevators[bestElevator.id - 1].destinationFloor =
-          currentCall.floor;
+      //Chosen elevator is taking the call + updating the occupied elevators counter
+
+      state.elevators[bestElevator.id - 1].status = "occupied";
+      state.occupiedElevatorsCounter++;
+
+      //If all elevators are occupied - updating any elevator available to false
+      if (state.occupiedElevatorsCounter === state.elevators.length) {
+        state.anyElevatorAvailable = false;
       }
-    },
-    elevatorArrivedSameFloor(state, action) {
-      state.elevators[action.payload.elevator - 1].status = "idle";
-      state.buttons[action.payload.button].status = "Arrived";
-      audio.play();
+      state.elevators[bestElevator.id - 1].destinationFloor = currentCall.floor;
     },
 
+    //After amimation ends - Changing elevator and button status, updating floor fields activating sound effect
     elevatorArrived(state, action) {
-      state.elevators[action.payload.elevator - 1].status = "idle";
+      state.elevators[action.payload.elevator - 1].status = "breaking";
       state.elevators[action.payload.elevator - 1].currentFloor =
         state.elevators[action.payload.elevator - 1].destinationFloor;
 
@@ -101,9 +94,18 @@ const elevatorSystemSlice = createSlice({
       audio.play();
     },
 
+    //Changing button and elevator status 2 seconds after reaching a floor
     changeStatusAfterTwoSec(state, action) {
       state.elevators[action.payload.elevator - 1].status = "available";
+      state.occupiedElevatorsCounter--;
+      state.anyElevatorAvailable = true;
       state.buttons[action.payload.button].status = "Call";
+    },
+
+    //Taking the call out of the queue after process has finished
+    dequeue(state) {
+      const newQueue = state.callQueue.slice(1);
+      state.callQueue = newQueue;
     },
   },
 });

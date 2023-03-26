@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "./Components/Header";
-import BuildingComp from "./Components/BuildingComp";
+import Building from "./Components/Building";
 import styled from "styled-components";
 
 const PageWrapper = styled.div`
-  background-color: #f2f2f2;
+  background-color: white;
   background-attachment: fixed;
   display: flex;
   justify-content: center;
@@ -18,8 +18,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   width: 80vw;
-  height: 80vh;
-  margin-top: 70px;
+  height: 85vh;
+  margin-top: 65px;
 `;
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
       <PageWrapper>
         <Header />
         <Container>
-          <BuildingComp />
+          <Building />
         </Container>
       </PageWrapper>
     </>

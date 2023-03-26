@@ -2,8 +2,9 @@ import styled, { keyframes } from "styled-components";
 import { useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store";
 
-const moveElevator = (x) =>
-  keyframes`
+const moveElevator = (x) => {
+  console.log("move elevator");
+  return keyframes`
     0% {
       transform: translateY(0);
     }
@@ -11,11 +12,11 @@ const moveElevator = (x) =>
       transform: translateY(${x < 0 ? "" : "-"}${Math.abs(x)}%);
     }
   `;
+};
 
 const AnimatedElevatorImg = styled.svg`
   animation: ${(props) => moveElevator(props.difference)} 2s linear;
   animation-fill-mode: forwards;
-
   animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
 `;
 

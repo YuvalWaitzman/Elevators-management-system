@@ -1,5 +1,4 @@
 import Elevator from "./Elevator";
-import Button from "./../Components/Button";
 
 class Building {
   constructor(floors, elevatorsNumber) {
@@ -7,10 +6,6 @@ class Building {
     this.elevatorsNumber = elevatorsNumber;
     this.elevators = [];
     this.buttons = [];
-  }
-
-  func() {
-    console.log("button clicked");
   }
 
   initiateElevators() {

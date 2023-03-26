@@ -26,7 +26,6 @@ const StyledSpanGround = styled.span`
 let BuildingComp = function () {
   const size = useSelector((state) => state.size);
   let callQueue = useSelector((state) => state.callQueue);
-  const elevators = useSelector((state) => state.elevators);
   const anyElevatorAvailable = useSelector(
     (state) => state.anyElevatorAvailable
   );

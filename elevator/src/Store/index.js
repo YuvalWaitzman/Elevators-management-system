@@ -72,7 +72,7 @@ const elevatorSystemSlice = createSlice({
 
       //Chosen elevator is taking the call + updating the occupied elevators counter
 
-      state.elevators[bestElevator.id - 1].status = "active";
+      state.elevators[bestElevator.id - 1].status = "occupied";
       state.occupiedElevatorsCounter++;
 
       //If all elevators are occupied - updating any elevator available to false
@@ -84,7 +84,7 @@ const elevatorSystemSlice = createSlice({
 
     //Animation end triggers this reducer - which responsible for changing status, updating floor fields and for the sound effect
     elevatorArrived(state, action) {
-      state.elevators[action.payload.elevator - 1].status = "idle";
+      state.elevators[action.payload.elevator - 1].status = "breaking";
       state.elevators[action.payload.elevator - 1].currentFloor =
         state.elevators[action.payload.elevator - 1].destinationFloor;
 

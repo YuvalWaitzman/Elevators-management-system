@@ -26,14 +26,14 @@ const TableCell = function (props) {
     String(elevator.currentFloor) + String(props.elevator) === props.id;
 
   const checkIfRenderTimer =
-    elevators[props.elevator - 1].status === "active" &&
+    elevators[props.elevator - 1].status === "occupied" &&
     Number(elevators[props.elevator - 1].destinationFloor) ==
       Number(props.floor) &&
     elevators[props.elevator - 1].currentFloor !== props.floor;
 
   //Moving images logic here
 
-  const shouldMove = elevator.status === "active";
+  const shouldMove = elevator.status === "occupied";
   console.log("should move?", shouldMove, props.id);
   const sameFloor =
     Number(elevators[props.elevator - 1].currentFloor) === Number(props.floor);
@@ -53,7 +53,6 @@ const TableCell = function (props) {
       floor={props.floor}
       elevator={props.elevator}
       id={props.id}
-      // height={props.height}
     >
       {!sameFloor && shouldMove && checkIfRenderTimer && <Timer />}
       {checkIfRenderElevator && (
@@ -66,7 +65,7 @@ const TableCell = function (props) {
             color={
               elevator.status === "available"
                 ? "black"
-                : elevator.status === "active"
+                : elevator.status === "occupied"
                 ? "red"
                 : "green"
             }

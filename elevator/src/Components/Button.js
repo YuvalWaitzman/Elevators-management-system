@@ -50,8 +50,9 @@ const Button = function (props) {
     let elevatorsInSameFloor = [];
     let chosenElevator;
     elevators.forEach((elevator) => {
+      console.log(elevator.currentFloor, props.id, elevator.status);
       if (
-        elevator.currentFloor === props.id &&
+        elevator.currentFloor === Number(props.id) &&
         elevator.status === "available"
       ) {
         elevatorsInSameFloor.push(elevator);
@@ -79,6 +80,7 @@ const Button = function (props) {
         );
       }, 2000);
     } else {
+      console.log("samc");
       dispatch(elevatorSystemActions.createCall(props.id));
     }
   };

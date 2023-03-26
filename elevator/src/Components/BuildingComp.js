@@ -69,14 +69,14 @@ let BuildingComp = function () {
   }
 
   useEffect(() => {
-    console.log("use effect!!!!", callQueue, anyElevatorAvailable);
+    console.log(
+      "use effect - checking if elevators available and queue not empty"
+    );
+    //Case queue is not empty and there are any available elevators
     if (callQueue.length > 0 && anyElevatorAvailable) {
       const dequeuedCall = callQueue[0];
-      console.log(`Dequeued item ${callQueue.length}`);
-
       dispatch(elevatorSystemActions.assignElevator(dequeuedCall));
       dispatch(elevatorSystemActions.dequeue());
-      // dispatch(elevatorSystemActions.updateCallQueue(callQueue.queue));
     }
   }, [callQueue, anyElevatorAvailable]);
 

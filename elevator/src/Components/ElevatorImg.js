@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store";
 
 const moveElevator = (x) =>
@@ -20,15 +20,13 @@ const AnimatedElevatorImg = styled.svg`
 `;
 
 export const ElevatorImg = (props) => {
-  const elevators = useSelector((state) => state.elevators);
-  const buttons = useSelector((state) => state.buttons);
   const dispatch = useDispatch();
 
   const handleAnimationEnd = () => {
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,
-        button: Number(props.destination),
+        button: props.destination,
       })
     );
 
@@ -36,7 +34,7 @@ export const ElevatorImg = (props) => {
       dispatch(
         elevatorSystemActions.changeStatusAfterTwoSec({
           elevator: props.id,
-          button: Number(props.destination),
+          button: props.destination,
         })
       );
     }, 2000);

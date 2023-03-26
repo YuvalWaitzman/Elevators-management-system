@@ -5,8 +5,8 @@ import Button from "../Components/Button";
 import { useSelector, useDispatch } from "react-redux";
 
 const BuildingContainer = styled.div`
-  margin-top: 10px;
-  margin-right: 70px;
+  margin-top: 5px;
+  margin-right: 40px;
 `;
 const StyledSpan = styled.span`
   display: flex;
@@ -23,10 +23,6 @@ const StyledSpanGround = styled.span`
 
 let BuildingComp = function () {
   const size = useSelector((state) => state.size);
-  const elevators = useSelector((state) => state.elevators);
-  const callsQueue = useSelector((state) => state.callsQueue);
-  const buttons = useSelector((state) => state.buttons);
-  const dispatch = useDispatch();
 
   //CREATING A NEW BUILDING INSTANCE WITH THE REQUIRED MEASURES FROM STORE
   const building = new Building(size.floors, size.elevators);

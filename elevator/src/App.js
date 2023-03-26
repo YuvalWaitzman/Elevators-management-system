@@ -18,8 +18,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   width: 80vw;
-  height: 80vh;
-  margin-top: 70px;
+  height: 85vh;
+  margin-top: 65px;
 `;
 
 function App() {

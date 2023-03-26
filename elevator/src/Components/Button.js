@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store/index";
-import { useEffect } from "react";
 import { chooseRandomFromArray } from "../Helpers/helper";
 
 const CallButton = styled.button`

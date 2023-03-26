@@ -81,7 +81,6 @@ const elevatorSystemSlice = createSlice({
         state.elevators[bestElevator.id - 1].destinationFloor =
           currentCall.floor;
       } else {
-        state.callsQueue.queue[0];
       }
     },
     elevatorArrivedSameFloor(state, action) {

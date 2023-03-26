@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { elevatorSystemActions } from "../Store/index";
-import { chooseRandomFromArray } from "../Helpers/helper";
+import { elevatorSystemActions } from "../Store";
 
+//Styled button colored conditionally with props
 const CallButton = styled.button`
   background-color: ${(props) =>
     props.status === "Call"
@@ -38,9 +38,9 @@ const CallButton = styled.button`
     transform: scale(1.03);
   }
 `;
+
 const Button = function (props) {
   const buttons = useSelector((state) => state.buttons);
-
   const dispatch = useDispatch();
   let buttonStatus = buttons[props.id].status;
 
@@ -49,7 +49,6 @@ const Button = function (props) {
     if (buttonStatus === "Call") {
       dispatch(elevatorSystemActions.createCall(props.id));
     }
-    // }
   };
 
   return (

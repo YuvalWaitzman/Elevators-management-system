@@ -2,6 +2,12 @@ import styled, { keyframes } from "styled-components";
 import { useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store";
 
+const AnimatedElevatorImg = styled.svg`
+  animation: ${(props) => moveElevator(props.difference)} 2s linear;
+  animation-fill-mode: forwards;
+  animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
+`;
+
 const moveElevator = (x) => {
   console.log("move elevator");
   return keyframes`
@@ -11,19 +17,13 @@ const moveElevator = (x) => {
     100% {
       transform: translateY(${x < 0 ? "" : "-"}${Math.abs(x)}%);
     }
+
   `;
 };
 
-const AnimatedElevatorImg = styled.svg`
-  animation: ${(props) => moveElevator(props.difference)} 2s linear;
-  animation-fill-mode: forwards;
-  animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
-`;
-
-export const ElevatorImg = (props) => {
+export const Elevator = (props) => {
   console.log("Image component render ");
   const dispatch = useDispatch();
-
   const handleAnimationEnd = () => {
     console.log("end of animation");
     dispatch(
@@ -70,4 +70,4 @@ export const ElevatorImg = (props) => {
   );
 };
 
-export default ElevatorImg;
+export default Elevator;

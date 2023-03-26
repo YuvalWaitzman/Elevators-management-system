@@ -1,7 +1,7 @@
-import Building from "../Classes/Building";
+import BuildingClass from "../Classes/BuildingClass";
 import styled from "styled-components";
 import TableCell from "./TableCell";
-import Button from "../Components/Button";
+import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { elevatorSystemActions } from "../Store";
@@ -23,7 +23,7 @@ const StyledSpanGround = styled.span`
   font-weight: bold;
 `;
 
-let BuildingComp = function () {
+let Building = function () {
   const size = useSelector((state) => state.size);
   let callQueue = useSelector((state) => state.callQueue);
   const anyElevatorAvailable = useSelector(
@@ -31,7 +31,7 @@ let BuildingComp = function () {
   );
   const dispatch = useDispatch();
   // Creating a new building instance with the required measures from store
-  const building = new Building(size.floors, size.elevators);
+  const building = new BuildingClass(size.floors, size.elevators);
   // building.initiateElevators();
   for (let i = 0; i < building.floors; i++) {
     let buttonId = `${i}`;
@@ -91,4 +91,4 @@ let BuildingComp = function () {
   );
 };
 
-export default BuildingComp;
+export default Building;

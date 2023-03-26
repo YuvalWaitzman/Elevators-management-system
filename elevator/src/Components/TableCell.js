@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import AnimatedElevatorImg, { ElevatorImg } from "./ElevatorImg";
 import { useSelector } from "react-redux";
 import Timer from "./Timer";
+import Elevator from "./Elevator";
 
 const ImgContainer = styled.div`
   text-align: center;
@@ -35,7 +35,8 @@ const TableCell = function (props) {
 
   const shouldMove = elevator.status === "occupied";
   console.log("should move?", shouldMove, props.id);
-  const sameFloor =
+
+  const isElevatorInSameFloor =
     Number(elevators[props.elevator - 1].currentFloor) === Number(props.floor);
 
   // elevator.destinationFloor &&
@@ -54,10 +55,10 @@ const TableCell = function (props) {
       elevator={props.elevator}
       id={props.id}
     >
-      {!sameFloor && shouldMove && checkIfRenderTimer && <Timer />}
+      {!isElevatorInSameFloor && shouldMove && checkIfRenderTimer && <Timer />}
       {checkIfRenderElevator && (
         <ImgContainer>
-          <ElevatorImg
+          <Elevator
             difference={difference()}
             moving={shouldMove}
             destination={elevator.destinationFloor}

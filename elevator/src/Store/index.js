@@ -82,7 +82,7 @@ const elevatorSystemSlice = createSlice({
       state.elevators[bestElevator.id - 1].destinationFloor = currentCall.floor;
     },
 
-    //Animation end triggers this reducer - which responsible for changing status, updating floor fields and for the sound effect
+    //After amimation ends - Changing elevator and button status, updating floor fields activating sound effect
     elevatorArrived(state, action) {
       state.elevators[action.payload.elevator - 1].status = "breaking";
       state.elevators[action.payload.elevator - 1].currentFloor =
@@ -94,7 +94,7 @@ const elevatorSystemSlice = createSlice({
       audio.play();
     },
 
-    //Triggered with setTimeout function
+    //Changing button and elevator status 2 seconds after reaching a floor
     changeStatusAfterTwoSec(state, action) {
       state.elevators[action.payload.elevator - 1].status = "available";
       state.occupiedElevatorsCounter--;

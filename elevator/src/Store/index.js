@@ -1,8 +1,8 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import Elevator from "../Classes/Elevator";
 import { chooseRandomFromArray } from "../Helpers/helper";
 import sound from "../ding-47489.mp3";
 const audio = new Audio(sound);
+
 const initialState = {
   size: { floors: 10, elevators: 5 },
   elevators: [],
@@ -36,6 +36,7 @@ const elevatorSystemSlice = createSlice({
   initialState,
   reducers: {
     createCall(state, action) {
+      console.log("createcall");
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
       state.callsQueue.queue.push(newCall);
@@ -49,6 +50,9 @@ const elevatorSystemSlice = createSlice({
       let bestElevators = [];
       let bestElevator;
       let currentCall = state.callsQueue.queue.shift();
+      if (state.callsQueue.queue.length === 0) {
+        state.callsQueue.isEmpty = true;
+      }
 
       state.elevators.forEach((elevator) => {
         if (elevator.status === "available") {
@@ -94,7 +98,6 @@ const elevatorSystemSlice = createSlice({
       state.elevators[action.payload.elevator - 1].destinationFloor = null;
       state.buttons[action.payload.button].status = "Arrived";
 
-      // SOUND FILE SERVED FROM HTTP SERVER
       audio.play();
     },
 

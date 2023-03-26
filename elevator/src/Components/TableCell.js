@@ -28,18 +28,18 @@ const TableCell = function (props) {
 
   //WRITE EXPLANATION
   // 0 and null are equal and first line renders timer
-  console.log(elevators[props.elevator - 1].destinationFloor, props.floor);
+  // console.log(elevators[props.elevator - 1].destinationFloor, props.floor);
   const checkIfRenderTimer =
-    // elevators[props.elevator - 1].destinationFloor !== null &&
-
-    ///////CHECK LOGIC
+    elevators[props.elevator - 1].status === "active" &&
     elevators[props.elevator - 1].destinationFloor == props.floor;
 
   //Moving images logic here
 
   const isMoving =
-    elevator.destinationFloor &&
-    elevator.currentFloor !== elevator.destinationFloor;
+    elevator.currentFloor !== elevator.destinationFloor &&
+    elevator.status === "active";
+  // elevator.destinationFloor &&
+  // elevator.currentFloor !== elevator.destinationFloor;
 
   const difference = () => {
     if (isMoving) {

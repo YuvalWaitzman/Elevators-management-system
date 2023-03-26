@@ -36,6 +36,7 @@ const elevatorSystemSlice = createSlice({
   initialState,
   reducers: {
     createCall(state, action) {
+      console.log("createcall");
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
       state.callsQueue.queue.push(newCall);
@@ -97,7 +98,6 @@ const elevatorSystemSlice = createSlice({
       state.elevators[action.payload.elevator - 1].destinationFloor = null;
       state.buttons[action.payload.button].status = "Arrived";
 
-      // SOUND FILE SERVED FROM HTTP SERVER
       audio.play();
     },
 

@@ -1,5 +1,7 @@
 # Lift-UI
+asdsdassadsad
 ## Structure
 
-1. **Components**
+**Components**
+1. Building - creating rows and columns, rendering the grid
 

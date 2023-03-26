@@ -20,10 +20,11 @@ const AnimatedElevatorImg = styled.svg`
 `;
 
 export const ElevatorImg = (props) => {
+  console.log("Image component render ");
   const dispatch = useDispatch();
 
   const handleAnimationEnd = () => {
-    console.log("endofa");
+    console.log("end of animation");
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,
@@ -40,10 +41,9 @@ export const ElevatorImg = (props) => {
       );
     }, 2000);
   };
-
+  console.log("is moving", props.moving);
   return (
     <AnimatedElevatorImg
-      buttonId={props.position}
       onAnimationEnd={handleAnimationEnd}
       difference={props.difference}
       moving={props.moving}

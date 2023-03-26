@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import AnimatedElevatorImg from "./ElevatorImg";
+import AnimatedElevatorImg, { ElevatorImg } from "./ElevatorImg";
 import { useSelector } from "react-redux";
 import Timer from "./Timer";
 
@@ -33,13 +33,18 @@ const TableCell = function (props) {
 
   //Moving images logic here
 
-  const isMoving = elevator.status === "active";
+  const shouldMove = elevator.status === "active";
+  console.log("should move?", shouldMove, props.id);
   const sameFloor =
     Number(elevators[props.elevator - 1].currentFloor) === Number(props.floor);
 
   // elevator.destinationFloor &&
   // elevator.currentFloor !== elevator.destinationFloor;
   const difference = () => {
+    console.log(
+      "differnce between destination and current",
+      (elevator.destinationFloor - elevator.currentFloor) * 118
+    );
     return (elevator.destinationFloor - elevator.currentFloor) * 118;
   };
 
@@ -48,14 +53,14 @@ const TableCell = function (props) {
       floor={props.floor}
       elevator={props.elevator}
       id={props.id}
-      height={props.height}
+      // height={props.height}
     >
-      {!sameFloor && isMoving && checkIfRenderTimer && <Timer />}
+      {!sameFloor && shouldMove && checkIfRenderTimer && <Timer />}
       {checkIfRenderElevator && (
         <ImgContainer>
-          <AnimatedElevatorImg
+          <ElevatorImg
             difference={difference()}
-            moving={isMoving}
+            moving={shouldMove}
             destination={elevator.destinationFloor}
             currentFloor={elevator.currentFloor}
             color={

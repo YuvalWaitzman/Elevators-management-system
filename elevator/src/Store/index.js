@@ -38,6 +38,7 @@ const elevatorSystemSlice = createSlice({
   reducers: {
     // Creating a call object and inserting into the queue - trigerred with a click on one of the buttons
     createCall(state, action) {
+      console.log("call created");
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
       state.callQueue.push(newCall);
@@ -47,6 +48,7 @@ const elevatorSystemSlice = createSlice({
 
     // Choosing the available elevator with the min distance from requested floor
     assignElevator(state, action) {
+      console.log("assignin elevator process starting..");
       let minDistance = state.buttons.length;
       let bestElevators = [];
       let bestElevator;
@@ -69,6 +71,7 @@ const elevatorSystemSlice = createSlice({
       bestElevator = chooseRandomFromArray(bestElevators);
 
       //Chosen elevator is taking the call + updating the occupied elevators counter
+
       state.elevators[bestElevator.id - 1].status = "active";
       state.occupiedElevatorsCounter++;
 

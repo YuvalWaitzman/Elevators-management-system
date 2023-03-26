@@ -42,7 +42,6 @@ const CallButton = styled.button`
 const Button = function (props) {
   const buttons = useSelector((state) => state.buttons);
   const elevators = useSelector((state) => state.elevators);
-
   const dispatch = useDispatch();
 
   const clickHandler = () => {
@@ -50,9 +49,8 @@ const Button = function (props) {
     let elevatorsInSameFloor = [];
     let chosenElevator;
     elevators.forEach((elevator) => {
-      console.log(elevator.currentFloor, props.id, elevator.status);
       if (
-        elevator.currentFloor === Number(props.id) &&
+        Number(elevator.currentFloor) == Number(props.id) &&
         elevator.status === "available"
       ) {
         elevatorsInSameFloor.push(elevator);

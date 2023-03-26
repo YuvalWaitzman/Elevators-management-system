@@ -40,7 +40,7 @@ const elevatorSystemSlice = createSlice({
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
       state.callsQueue.queue.push(newCall);
-      console.log(state.callsQueue.queue);
+      console.log(state.callsQueue.queue[0]);
       if (state.callsQueue.isEmpty) {
         state.callsQueue.isEmpty = false;
       }
@@ -61,7 +61,7 @@ const elevatorSystemSlice = createSlice({
           );
           if (currentElevatorDistance < minDistance) {
             minDistance = currentElevatorDistance;
-            bestElevators = [elevator]; // clear the array and add the current elevator
+            [elevator] = bestElevators; // clear the array and add the current elevator
           } else if (currentElevatorDistance === minDistance) {
             bestElevators.push(elevator); // add the current elevator to the array
           }

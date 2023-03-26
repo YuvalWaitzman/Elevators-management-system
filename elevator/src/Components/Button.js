@@ -43,6 +43,7 @@ const Button = function (props) {
   const elevators = useSelector((state) => state.elevators);
 
   const dispatch = useDispatch();
+  let buttonStatus = buttons[props.id].status;
 
   const clickHandler = () => {
     //special case trigger the elevator arrived reducer
@@ -82,7 +83,6 @@ const Button = function (props) {
       dispatch(elevatorSystemActions.createCall(props.id));
     }
   };
-  let buttonStatus = buttons[props.id].status;
 
   return (
     <>

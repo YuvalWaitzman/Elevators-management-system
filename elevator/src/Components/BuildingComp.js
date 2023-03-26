@@ -3,6 +3,8 @@ import styled from "styled-components";
 import TableCell from "./TableCell";
 import Button from "../Components/Button";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { elevatorSystemActions } from "../Store";
 
 const BuildingContainer = styled.div`
   margin-top: 5px;
@@ -23,6 +25,12 @@ const StyledSpanGround = styled.span`
 
 let BuildingComp = function () {
   const size = useSelector((state) => state.size);
+  let callQueue = useSelector((state) => state.callQueue);
+  const elevators = useSelector((state) => state.elevators);
+  const anyElevatorAvailable = useSelector(
+    (state) => state.anyElevatorAvailable
+  );
+  const dispatch = useDispatch();
 
   //CREATING A NEW BUILDING INSTANCE WITH THE REQUIRED MEASURES FROM STORE
   const building = new Building(size.floors, size.elevators);
@@ -60,6 +68,18 @@ let BuildingComp = function () {
     rows.push(<tr>{cols}</tr>);
   }
 
+  useEffect(() => {
+    console.log("use effect!!!!", callQueue, anyElevatorAvailable);
+    if (callQueue.length > 0 && anyElevatorAvailable) {
+      const dequeuedCall = callQueue[0];
+      console.log(`Dequeued item ${callQueue.length}`);
+
+      dispatch(elevatorSystemActions.assignElevator(dequeuedCall));
+      dispatch(elevatorSystemActions.dequeue());
+      // dispatch(elevatorSystemActions.updateCallQueue(callQueue.queue));
+    }
+  }, [callQueue, anyElevatorAvailable]);
+
   return (
     <BuildingContainer>
       <table>
@@ -70,3 +90,11 @@ let BuildingComp = function () {
 };
 
 export default BuildingComp;
+function isElevatorAvailable(elevators) {
+  elevators.forEach((elevator) => {
+    if (elevator.status === "available") {
+      return true;
+    }
+  });
+  return false;
+}

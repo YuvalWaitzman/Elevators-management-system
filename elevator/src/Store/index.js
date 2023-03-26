@@ -91,9 +91,9 @@ const elevatorSystemSlice = createSlice({
     },
 
     elevatorArrived(state, action) {
-      state.elevators[action.payload.elevator - 1].status = "idle";
       state.elevators[action.payload.elevator - 1].currentFloor =
         state.elevators[action.payload.elevator - 1].destinationFloor;
+      state.elevators[action.payload.elevator - 1].status = "idle";
 
       state.elevators[action.payload.elevator - 1].destinationFloor = null;
       state.buttons[action.payload.button].status = "Arrived";

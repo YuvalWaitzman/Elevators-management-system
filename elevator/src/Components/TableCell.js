@@ -1,7 +1,6 @@
-import keyframes from "styled-components";
 import styled from "styled-components";
 import AnimatedElevatorImg from "./ElevatorImg";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Timer from "./Timer";
 
 const ImgContainer = styled.div`
@@ -19,7 +18,7 @@ const StyledTableCell = styled.td`
 
 const TableCell = function (props) {
   const elevators = useSelector((state) => state.elevators);
-  const buttons = useSelector((state) => state.buttons);
+  // const buttons = useSelector((state) => state.buttons);
 
   const elevator = elevators[props.elevator - 1];
   //WRITE EXPLANATION

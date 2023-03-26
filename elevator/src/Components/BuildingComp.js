@@ -30,16 +30,15 @@ let BuildingComp = function () {
     (state) => state.anyElevatorAvailable
   );
   const dispatch = useDispatch();
-
-  //CREATING A NEW BUILDING INSTANCE WITH THE REQUIRED MEASURES FROM STORE
+  // Creating a new building instance with the required measures from store
   const building = new Building(size.floors, size.elevators);
-  building.initiateElevators();
+  // building.initiateElevators();
   for (let i = 0; i < building.floors; i++) {
     let buttonId = `${i}`;
     building.buttons.push(<Button id={buttonId}></Button>);
   }
 
-  //BUILD ROWS AND COLS FOR FINAL BUILDING GRID
+  //Building rows and cols
   const rows = [];
   for (let i = building.floors - 1; i >= 0; i--) {
     const cols = [];
@@ -55,11 +54,14 @@ let BuildingComp = function () {
       cols.push(<StyledSpan>{i}th</StyledSpan>);
     }
 
+    //Creating unique id for each cell based on column number and row number
+
     for (let j = 1; j <= building.elevatorsNumber; j++) {
       const cellId = `${i}${j}`;
 
       cols.push(<TableCell floor={i} elevator={j} id={cellId}></TableCell>);
 
+      //Rendering the buttons
       if (j === building.elevatorsNumber) {
         cols.push(building.buttons[i]);
       }
@@ -71,6 +73,7 @@ let BuildingComp = function () {
     console.log(
       "use effect - checking if elevators available and queue not empty"
     );
+
     //Case queue is not empty and there are any available elevators
     if (callQueue.length > 0 && anyElevatorAvailable) {
       const dequeuedCall = callQueue[0];
@@ -89,11 +92,3 @@ let BuildingComp = function () {
 };
 
 export default BuildingComp;
-function isElevatorAvailable(elevators) {
-  elevators.forEach((elevator) => {
-    if (elevator.status === "available") {
-      return true;
-    }
-  });
-  return false;
-}

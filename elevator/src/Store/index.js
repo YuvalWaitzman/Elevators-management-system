@@ -12,7 +12,7 @@ const initialState = {
   occupiedElevatorsCounter: 0,
 };
 
-// Creating elevator objects according to the the number of elevators from initialState.size
+//Creating elevator objects according to the the number of elevators from initialState.size
 for (let i = 1; i <= initialState.size.elevators; i++) {
   initialState.elevators.push({
     id: i,
@@ -48,7 +48,7 @@ const elevatorSystemSlice = createSlice({
       let closestElevators = findClosestElevators(state.elevators, currentCall);
       let bestElevator = chooseRandomFromArray(closestElevators);
 
-      //Chosen elevator is taking the call + updating the occupied elevators counter
+      // Chosen elevator is taking the call + updating the occupied elevators counter
 
       state.elevators[bestElevator.id - 1].status = "occupied";
       state.occupiedElevatorsCounter++;
@@ -60,7 +60,7 @@ const elevatorSystemSlice = createSlice({
       state.elevators[bestElevator.id - 1].destinationFloor = currentCall.floor;
     },
 
-    //After amimation ends - Changing elevator and button status, updating floor fields activating sound effect
+    //After animation ends - Changing elevator and button status, updating floor fields activating sound effect
     elevatorArrived(state, action) {
       state.elevators[action.payload.elevator - 1].status = "braking";
       state.elevators[action.payload.elevator - 1].currentFloor =
@@ -88,7 +88,7 @@ const elevatorSystemSlice = createSlice({
   },
 });
 
-//HELPER FUNCTIONS
+//Helper functions
 
 //1. Finding the closest elevators for the current call
 

@@ -15,7 +15,7 @@ const StyledSpan = styled.span`
   margin-left: 60px;
   font-weight: bold;
 `;
-const StyledSpanGround = styled.span`
+const StyledSpanGroundFloor = styled.span`
   display: flex;
   margin-right: 10px;
   margin-left: 30px;
@@ -38,12 +38,12 @@ let Building = function () {
     building.buttons.push(<Button id={buttonId}></Button>);
   }
 
-  //Building rows and cols
+  //Building rows and columns
   const rows = [];
   for (let i = building.floors - 1; i >= 0; i--) {
     const cols = [];
     if (i === 0) {
-      cols.push(<StyledSpanGround> Ground Floor </StyledSpanGround>);
+      cols.push(<StyledSpanGroundFloor> Ground Floor </StyledSpanGroundFloor>);
     } else if (i === 1) {
       cols.push(<StyledSpan>{i}st </StyledSpan>);
     } else if (i === 2) {

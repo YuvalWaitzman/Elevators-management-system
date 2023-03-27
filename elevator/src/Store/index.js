@@ -48,7 +48,7 @@ const elevatorSystemSlice = createSlice({
       let closestElevators = findClosestElevators(state.elevators, currentCall);
       let bestElevator = chooseRandomFromArray(closestElevators);
 
-      //Chosen elevator is taking the call + updating the occupied elevators counter
+      // Chosen elevator is taking the call + updating the occupied elevators counter
 
       state.elevators[bestElevator.id - 1].status = "occupied";
       state.occupiedElevatorsCounter++;

@@ -1,5 +1,4 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import { chooseRandomFromArray } from "../Helpers/helper";
 import sound from "../ding-47489.mp3";
 const audio = new Audio(sound);
 
@@ -13,7 +12,7 @@ const initialState = {
   occupiedElevatorsCounter: 0,
 };
 
-// Creating elevator objects according to the the number of elevators from initial state
+// Creating elevator objects according to the the number of elevators from initialState.size
 for (let i = 1; i <= initialState.size.elevators; i++) {
   initialState.elevators.push({
     id: i,
@@ -23,7 +22,7 @@ for (let i = 1; i <= initialState.size.elevators; i++) {
   });
 }
 
-//Creating button objects according to the number of floors from initial state
+//Creating button objects according to the number of floors from initialState.size
 for (let i = 0; i < initialState.size.floors; i++) {
   initialState.buttons.push({
     id: i,
@@ -39,9 +38,7 @@ const elevatorSystemSlice = createSlice({
     // Creating a call object and inserting into the queue - trigerred with a click on one of the buttons
     createCall(state, action) {
       const newCall = { timeStamp: Date.now(), floor: action.payload };
-
       state.callQueue.push(newCall);
-
       state.buttons[action.payload].status = "Waiting";
     },
 
@@ -91,6 +88,10 @@ const elevatorSystemSlice = createSlice({
   },
 });
 
+//HELPER FUNCTIONS
+
+//1. Finding the closest elevators for the current call
+
 function findClosestElevators(elevators, currentCall) {
   let closestElevators = [];
   let minDistance = Number.MAX_SAFE_INTEGER;
@@ -110,6 +111,14 @@ function findClosestElevators(elevators, currentCall) {
   return closestElevators;
 }
 
+// 2. Choosing a random element out of an array
+
+const chooseRandomFromArray = (arr) => {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+};
+
+//Store set up
 const store = configureStore({ reducer: elevatorSystemSlice.reducer });
 
 export default store;

@@ -49,6 +49,7 @@ const elevatorSystemSlice = createSlice({
     // Choosing the available elevator with the min distance from requested floor
     assignElevator(state, action) {
       console.log("assignin elevator process starting..");
+
       let minDistance = state.buttons.length;
       let bestElevators = [];
       let bestElevator;

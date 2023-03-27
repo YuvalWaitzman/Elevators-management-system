@@ -32,7 +32,7 @@ let Building = function () {
   const dispatch = useDispatch();
   // Creating a new building instance with the required measures from store
   const building = new BuildingClass(size.floors, size.elevators);
-  // building.initiateElevators();
+
   for (let i = 0; i < building.floors; i++) {
     let buttonId = `${i}`;
     building.buttons.push(<Button id={buttonId}></Button>);

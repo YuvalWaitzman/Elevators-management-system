@@ -15,8 +15,8 @@ This project is a React and JavaScript-based application designed to manage an e
 ## Technologies Used
 
 ### React.js
-## styled-components
-## Redux
+#### styled-components
+#### Redux
 
 - Redux Toolkit - A library that simplifies the process of using Redux, a state management library for JavaScript applications. It provides utilities for writing reducers, creating actions, and generating store configuration.
 

@@ -2,9 +2,11 @@ import React from "react";
 import Header from "./Components/Header";
 import Building from "./Components/Building";
 import styled from "styled-components";
+import LandingPage from "./Components/LandingPage";
+import { useState } from "react";
 
 const PageWrapper = styled.div`
-  background-color: white;
+  background-color: #f0fff0;
   background-attachment: fixed;
   display: flex;
   justify-content: center;
@@ -14,7 +16,7 @@ const PageWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: white;
+  background-color: #f0fff0;
   display: flex;
   justify-content: center;
   width: 80vw;
@@ -23,14 +25,20 @@ const Container = styled.div`
 `;
 
 function App() {
+  const [showApp, setShowApp] = useState(false);
+
   return (
     <>
-      <PageWrapper>
-        <Header />
-        <Container>
-          <Building />
-        </Container>
-      </PageWrapper>
+      {showApp ? (
+        <PageWrapper>
+          <Header />
+          <Container>
+            <Building />
+          </Container>
+        </PageWrapper>
+      ) : (
+        <LandingPage onButtonClick={() => setShowApp(true)} />
+      )}
     </>
   );
 }

@@ -84,7 +84,7 @@ const elevatorSystemSlice = createSlice({
 
     //After amimation ends - Changing elevator and button status, updating floor fields activating sound effect
     elevatorArrived(state, action) {
-      state.elevators[action.payload.elevator - 1].status = "breaking";
+      state.elevators[action.payload.elevator - 1].status = "braking";
       state.elevators[action.payload.elevator - 1].currentFloor =
         state.elevators[action.payload.elevator - 1].destinationFloor;
 

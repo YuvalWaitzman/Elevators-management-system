@@ -30,7 +30,7 @@ A redux slice is defined with 5 reducers in order to manage the state of the ent
 2. The 'assignElevator' reducer is called when an elevator is assigned to a call with a useEffect hook which dispatch an action whenever the callQueue is. It chooses the available elevator with the shortest distance to the requested floor and sets its status to "occupied". It also updates the destinationFloor field of the chosen elevator with the floor number of the current call. If all elevators are occupied, it sets the anyElevatorAvailable field to false.
 3. The 'elevatorArrived' reducer is called when an elevator arrives at a floor. It sets the elevator status to "braking", updates its currentFloor field to the destination floor, and sets the destinationFloor field to null. It also sets the button status to "Arrived" and plays a sound effect.
 4. The changeStatusAfterTwoSec reducer is called two seconds after an elevator arrives at a floor. It sets the elevator status to "available", decrements the occupiedElevatorsCounter field, sets the anyElevatorAvailable field to true if necessary, and sets the button status to "Call".
-5.The 'dequeue' reducer is called when a call is completed it's process. It removes the first call object from the callQueue array in the state.
+5. The 'dequeue' reducer is called when a call is completed it's process. It removes the first call object from the callQueue array in the state.
 
 
 

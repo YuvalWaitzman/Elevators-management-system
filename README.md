@@ -5,6 +5,7 @@ This project is a React and JavaScript-based application designed to manage an e
 - Implementing a call queue to track every user-generated elevator call and ensure that they are consumed in the order of submission, improving overall efficiency and     reducing wait times.
 - Prioritizing elevators based on their distance from the floors where calls are made, in order to optimize response times and improve system performance.
 - Creating a state updating system to manage the real-time status of elevator buttons and elevators with redux, ensuring that users are able to receive accurate information and that the system is able to respond quickly to changes in demand.
+
 ## Flow
 
 1. Users click on the call buttons on a floor to request an elevator, which changes the button's status and color.
@@ -16,6 +17,7 @@ This project is a React and JavaScript-based application designed to manage an e
 
 ### React.js
 #### styled-components
+
 #### Redux
 
 ## Implementation
@@ -27,7 +29,7 @@ This project is a React and JavaScript-based application designed to manage an e
 
 ## State Management
 State management in this elevator simulation app is implemented using Redux.
-The initial state of the system includes size,calls Queue, elevators and buttons arrays
+The initial state of the system includes size,calls Queue, elevators and buttons arrays.
 A redux slice is defined with 5 reducers in order to manage the state of the entire system:
 
 1. The 'createCall' reducer is called when a button is clicked to call an elevator to a floor. It creates a new call object with a timestamp and floor number, pushes it onto the callQueue array in the state, and sets the button status to "Waiting".

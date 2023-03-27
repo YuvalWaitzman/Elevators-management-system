@@ -40,7 +40,7 @@ const TableCell = function (props) {
 
   // elevator.destinationFloor &&
   // elevator.currentFloor !== elevator.destinationFloor;
-  const difference = () => {
+  const calcDistance = () => {
     return (elevator.destinationFloor - elevator.currentFloor) * 118;
   };
 
@@ -54,7 +54,7 @@ const TableCell = function (props) {
       {checkIfRenderElevator && (
         <ImgContainer>
           <Elevator
-            difference={difference()}
+            distance={calcDistance()}
             moving={shouldMove}
             destination={elevator.destinationFloor}
             currentFloor={elevator.currentFloor}

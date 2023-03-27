@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "./Components/Header";
-import Building from "./Components/Building";
+import Header from "./Components/App/Header";
+import Building from "./Components/App/Building";
 import styled from "styled-components";
-import LandingPage from "./Components/LandingPage";
+import LandingPage from "./Components/LandingPage/LandingPage";
 import { useState } from "react";
 
 const PageWrapper = styled.div`

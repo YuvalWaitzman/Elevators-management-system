@@ -1,7 +1,8 @@
 import styled, { keyframes } from "styled-components";
 import { useDispatch } from "react-redux";
-import { elevatorSystemActions } from "../Store";
+import { elevatorSystemActions } from "../../Store";
 
+//Animation function - gets the distance and performs the transformation
 const moveElevator = (x) => {
   return keyframes`
     0% {
@@ -16,9 +17,9 @@ const moveElevator = (x) => {
 
 const AnimatedElevatorImg = styled.svg`
   animation: ${(props) =>
-      props.moving ? moveElevator(props.difference) : "none"}
+      props.moving ? moveElevator(props.distance) : "none"}
     ${(props) =>
-      Math.abs(props.difference) === 0 ? 2 : Math.abs(props.difference) / 100}s
+      Math.abs(props.distance) === 0 ? 2 : Math.abs(props.distance) / 100}s
     linear;
   animation-fill-mode: forwards;
   animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
@@ -28,6 +29,7 @@ export const Elevator = (props) => {
   const dispatch = useDispatch();
 
   const handleAnimationEnd = () => {
+    //Elevator arrived - updating button and elevator status
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,
@@ -49,7 +51,7 @@ export const Elevator = (props) => {
   return (
     <AnimatedElevatorImg
       onAnimationEnd={handleAnimationEnd}
-      difference={props.difference}
+      distance={props.distance}
       moving={props.moving}
       id={props.id}
       width="40"

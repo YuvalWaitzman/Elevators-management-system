@@ -1,10 +1,10 @@
-import BuildingClass from "../Classes/BuildingClass";
+import BuildingClass from "../../Classes/BuildingClass";
 import styled from "styled-components";
 import TableCell from "./TableCell";
 import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { elevatorSystemActions } from "../Store";
+import { elevatorSystemActions } from "../../Store";
 
 const BuildingContainer = styled.div`
   margin-top: 5px;

@@ -90,7 +90,7 @@ const elevatorSystemSlice = createSlice({
 
 //Helper functions
 
-//1. Finding the closest elevators for the current call
+//1.Finding the closest elevators for the current call
 
 function findClosestElevators(elevators, currentCall) {
   let closestElevators = [];

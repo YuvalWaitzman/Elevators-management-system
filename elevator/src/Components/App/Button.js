@@ -52,7 +52,7 @@ const Button = function (props) {
 
   return (
     <>
-      <CallButton status={buttonStatus} id={props.id} onClick={clickHandler}>
+      <CallButton status={buttonStatus} onClick={clickHandler}>
         {buttonStatus === "Call"
           ? "Call"
           : buttonStatus === "Waiting"

@@ -60,7 +60,7 @@ const elevatorSystemSlice = createSlice({
       state.elevators[bestElevator.id - 1].destinationFloor = currentCall.floor;
     },
 
-    //After amimation ends - Changing elevator and button status, updating floor fields activating sound effect
+    //After animation ends - Changing elevator and button status, updating floor fields activating sound effect
     elevatorArrived(state, action) {
       state.elevators[action.payload.elevator - 1].status = "braking";
       state.elevators[action.payload.elevator - 1].currentFloor =
@@ -88,7 +88,7 @@ const elevatorSystemSlice = createSlice({
   },
 });
 
-//HELPER FUNCTIONS
+//Helper functions
 
 //1. Finding the closest elevators for the current call
 

@@ -53,7 +53,6 @@ export const Elevator = (props) => {
       onAnimationEnd={handleAnimationEnd}
       distance={props.distance}
       moving={props.moving}
-      id={props.id}
       width="40"
       height="50"
       viewBox="0 0 50 50"

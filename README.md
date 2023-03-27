@@ -20,6 +20,6 @@ This project is a React and JavaScript-based application designed to manage an e
 
 ## State Management
 
-**Extensibility
+**Extensibility 
 
 

@@ -6,13 +6,12 @@ This project is a React and JavaScript-based application designed to manage an e
 - Prioritizing elevators based on their distance from the floors where calls are made, in order to improve response times and overall efficiency
 ## Flow
 
-1. Users click on the call buttons on a floor to request an elevator, which changes the button's status from "call" to "waiting".
+1. Users click on the call buttons on a floor to request an elevator, which changes the button's status and color.
 2. The system assigns the closest elevator to the call.
 3. A timer appears on the floor to show when the elevator is expected to arrive.
 4. The elevator arrives, and after a 2-second delay, it becomes available to respond to the next call.
 
-
-1. Building - creating rows and columns, rendering the grid
+## Structure
 
 **State Management
 

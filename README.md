@@ -19,7 +19,11 @@ This project is a React and JavaScript-based application designed to manage an e
 #### Redux
 
 ## Implementation
+- One of the key features of this app is a calls Queue maintained in the redux store, which allows the relevant elevators to consume each and every call in the right order. By adding the "isAnyElevatorAvailable" and the queue itself to the initial state, and using them as dependencies to a useEffect hook, the system is always aware if there is an unhandled call, and an available elevator to take it.
 
+- The app can be easily modified to handle more elevators and floors by adjusting the initial state values.
+
+- Each of the stages of a call life cycle is handled separately in the reducers.
 
 ## State Management
 State management in this elevator simulation app is implemented using Redux.
@@ -28,7 +32,7 @@ A redux slice is defined with 5 reducers in order to manage the state of the ent
 
 1. The 'createCall' reducer is called when a button is clicked to call an elevator to a floor. It creates a new call object with a timestamp and floor number, pushes it onto the callQueue array in the state, and sets the button status to "Waiting".
 
-2. The 'assignElevator' reducer is called when an elevator is assigned to a call with a useEffect hook which dispatch an action whenever the callQueue is. It chooses the available elevator with the shortest distance to the requested floor and sets its status to "occupied". It also updates the destinationFloor field of the chosen elevator with the floor number of the current call. If all elevators are occupied, it sets the anyElevatorAvailable field to false.
+2. The 'assignElevator' reducer is called when an elevator is assigned to a call, triggered with a useEffect hook which dispatch an action whenever the callQueue isn't empty and there are any eleavtors available. It chooses the available elevator with the shortest distance to the requested floor and sets its status to "occupied". It also updates the destinationFloor field of the chosen elevator with the floor number of the current call. If all elevators are occupied, it sets the anyElevatorAvailable field to false.
 
 3. The 'elevatorArrived' reducer is called when an elevator arrives at a floor. It sets the elevator status to "braking", updates its currentFloor field to the destination floor, and sets the destinationFloor field to null. It also sets the button status to "Arrived" and plays a sound effect.
 

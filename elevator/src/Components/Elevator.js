@@ -2,8 +2,13 @@ import styled, { keyframes } from "styled-components";
 import { useDispatch } from "react-redux";
 import { elevatorSystemActions } from "../Store";
 
+/* animation: ${(props) => moveElevator(props.difference)}
+    ${(props) =>
+      Math.abs(props.difference) === 0 ? 2 : Math.abs(props.difference) / 100}s
+    linear; */
 const AnimatedElevatorImg = styled.svg`
-  animation: ${(props) => moveElevator(props.difference)}
+  animation: ${(props) =>
+      props.moving ? moveElevator(props.difference) : "none"}
     ${(props) =>
       Math.abs(props.difference) === 0 ? 2 : Math.abs(props.difference) / 100}s
     linear;

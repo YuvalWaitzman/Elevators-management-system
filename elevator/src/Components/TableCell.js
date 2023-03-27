@@ -25,6 +25,8 @@ const TableCell = function (props) {
   const checkIfRenderElevator =
     String(elevator.currentFloor) + String(props.elevator) === props.id;
 
+  console.log("Should render elevator?", checkIfRenderElevator);
+
   const checkIfRenderTimer =
     elevators[props.elevator - 1].status === "occupied" &&
     Number(elevators[props.elevator - 1].destinationFloor) ==

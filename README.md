@@ -21,11 +21,11 @@ This project is a React and JavaScript-based application designed to manage an e
 #### Redux
 
 ## Implementation
-- One of the key features of this app is a calls Queue maintained in the redux store, which allows the relevant elevators to consume each and every call in the right order. By adding the "isAnyElevatorAvailable" and the queue itself to the initial state, and using them as dependencies to a useEffect hook, the system is always aware if there is an unhandled call, and an available elevator to take it.
+- One of the key features of this app is a call Queue maintained in the redux store, which allows the relevant elevators to consume each and every call in the right order. By adding "isAnyElevatorAvailable" and the queue itself to the initial state, and using them as dependencies to a useEffect hook, the system is always aware of any unhandled calls, and keeps track of available elevators to serve them.
 
-- The app can be easily modified to handle more elevators and floors by adjusting the initial state values.
+- The app is designed to enable dynamic definition of the number of floors or elevators, by simply modifying two initial state values
 
-- Each of the stages of a call life cycle is handled separately in the reducers.
+- Each stage of a call life cycle is handled separately in the reducers.
 
 ## State Management
 State management in this elevator simulation app is implemented using Redux.

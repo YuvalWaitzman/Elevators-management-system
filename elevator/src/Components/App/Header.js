@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 const StyledHeader = styled.h1`
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 0;
   background-color: #fffafa;
@@ -11,9 +13,9 @@ const StyledHeader = styled.h1`
   text-align: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", "Geneva", Verdana, sans-serif;
-  margin-bottom: 2rem;
+  margin-top: 3px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-  height: 20px;
+  height: 10px;
 `;
 
 const Header = function () {

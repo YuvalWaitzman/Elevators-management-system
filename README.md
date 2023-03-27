@@ -18,7 +18,7 @@ React - A popular JavaScript library for building user interfaces, used for crea
 JavaScript - A programming language used for developing the application's logic and functionality.
 Redux Toolkit - A library that simplifies the process of using Redux, a state management library for JavaScript applications. It provides utilities for writing reducers, creating actions, and generating store configuration.
 
-**State Management
+**State Managemen
 
 **Extensibility
 

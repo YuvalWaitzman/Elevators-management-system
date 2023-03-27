@@ -4,6 +4,11 @@ This project is a React and JavaScript-based application designed to manage an e
 - Creating a scalable solution to manage elevator systems of any size and complexity
 - Maintaining a call queue to track every user-generated elevator call and consuming them in order of submission
 - Prioritizing elevators based on their distance from the floors where calls are made, in order to improve response times and overall efficiency
+
+- Creating a scalable and responsive solution for managing elevator systems of any size and complexity.
+- Implementing a call queue to track every user-generated elevator call and ensure that they are consumed in the order of submission, improving overall efficiency and     reducing wait times.
+- Prioritizing elevators based on their distance from the floors where calls are made, in order to optimize response times and improve system performance.
+- Creating a state updating system to manage the real-time status of elevator buttons and elevators with redux, ensuring that users are able to receive accurate information and that the system is able to respond quickly to changes in demand.
 ## Flow
 
 1. Users click on the call buttons on a floor to request an elevator, which changes the button's status and color.

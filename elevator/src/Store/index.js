@@ -1,5 +1,4 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-import { chooseRandomFromArray } from "../Helpers/helper";
 import sound from "../ding-47489.mp3";
 const audio = new Audio(sound);
 
@@ -13,7 +12,7 @@ const initialState = {
   occupiedElevatorsCounter: 0,
 };
 
-// Creating elevator objects according to the the number of elevators from initial state
+// Creating elevator objects according to the the number of elevators from initialState.size
 for (let i = 1; i <= initialState.size.elevators; i++) {
   initialState.elevators.push({
     id: i,
@@ -23,7 +22,7 @@ for (let i = 1; i <= initialState.size.elevators; i++) {
   });
 }
 
-//Creating button objects according to the number of floors from initial state
+//Creating button objects according to the number of floors from initialState.size
 for (let i = 0; i < initialState.size.floors; i++) {
   initialState.buttons.push({
     id: i,
@@ -38,37 +37,16 @@ const elevatorSystemSlice = createSlice({
   reducers: {
     // Creating a call object and inserting into the queue - trigerred with a click on one of the buttons
     createCall(state, action) {
-      console.log("call created");
       const newCall = { timeStamp: Date.now(), floor: action.payload };
-
       state.callQueue.push(newCall);
-
       state.buttons[action.payload].status = "Waiting";
     },
 
     // Choosing the available elevator with the min distance from requested floor
     assignElevator(state, action) {
-      console.log("assignin elevator process starting..");
-      let minDistance = state.buttons.length;
-      let bestElevators = [];
-      let bestElevator;
       let currentCall = action.payload;
-
-      state.elevators.forEach((elevator) => {
-        if (elevator.status === "available") {
-          let currentElevatorDistance = Math.abs(
-            elevator.currentFloor - currentCall.floor
-          );
-          if (currentElevatorDistance < minDistance) {
-            minDistance = currentElevatorDistance;
-            bestElevators = [elevator]; // clear the array and add the current elevator
-          } else if (currentElevatorDistance === minDistance) {
-            bestElevators.push(elevator); // add the current elevator to the array
-          }
-        }
-      });
-
-      bestElevator = chooseRandomFromArray(bestElevators);
+      let closestElevators = findClosestElevators(state.elevators, currentCall);
+      let bestElevator = chooseRandomFromArray(closestElevators);
 
       //Chosen elevator is taking the call + updating the occupied elevators counter
 
@@ -84,7 +62,7 @@ const elevatorSystemSlice = createSlice({
 
     //After amimation ends - Changing elevator and button status, updating floor fields activating sound effect
     elevatorArrived(state, action) {
-      state.elevators[action.payload.elevator - 1].status = "breaking";
+      state.elevators[action.payload.elevator - 1].status = "braking";
       state.elevators[action.payload.elevator - 1].currentFloor =
         state.elevators[action.payload.elevator - 1].destinationFloor;
 
@@ -110,6 +88,37 @@ const elevatorSystemSlice = createSlice({
   },
 });
 
+//HELPER FUNCTIONS
+
+//1. Finding the closest elevators for the current call
+
+function findClosestElevators(elevators, currentCall) {
+  let closestElevators = [];
+  let minDistance = Number.MAX_SAFE_INTEGER;
+  elevators.forEach((elevator) => {
+    if (elevator.status === "available") {
+      let currentElevatorDistance = Math.abs(
+        elevator.currentFloor - currentCall.floor
+      );
+      if (currentElevatorDistance < minDistance) {
+        minDistance = currentElevatorDistance;
+        closestElevators = [elevator]; // clear the array and add the current elevator
+      } else if (currentElevatorDistance === minDistance) {
+        closestElevators.push(elevator);
+      }
+    }
+  });
+  return closestElevators;
+}
+
+// 2. Choosing a random element out of an array
+
+const chooseRandomFromArray = (arr) => {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+};
+
+//Store set up
 const store = configureStore({ reducer: elevatorSystemSlice.reducer });
 
 export default store;

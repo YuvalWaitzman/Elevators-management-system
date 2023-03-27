@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { elevatorSystemActions } from "../Store";
+import { elevatorSystemActions } from "../../Store";
 
 //Styled button colored conditionally with props
 const CallButton = styled.button`
@@ -45,7 +45,6 @@ const Button = function (props) {
   let buttonStatus = buttons[props.id].status;
 
   const clickHandler = () => {
-    console.log("button pushed");
     if (buttonStatus === "Call") {
       dispatch(elevatorSystemActions.createCall(props.id));
     }

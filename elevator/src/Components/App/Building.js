@@ -1,10 +1,10 @@
-import BuildingClass from "../Classes/BuildingClass";
+import BuildingClass from "../../Classes/BuildingClass";
 import styled from "styled-components";
 import TableCell from "./TableCell";
 import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { elevatorSystemActions } from "../Store";
+import { elevatorSystemActions } from "../../Store";
 
 const BuildingContainer = styled.div`
   margin-top: 5px;
@@ -32,7 +32,7 @@ let Building = function () {
   const dispatch = useDispatch();
   // Creating a new building instance with the required measures from store
   const building = new BuildingClass(size.floors, size.elevators);
-  // building.initiateElevators();
+
   for (let i = 0; i < building.floors; i++) {
     let buttonId = `${i}`;
     building.buttons.push(<Button id={buttonId}></Button>);
@@ -70,10 +70,6 @@ let Building = function () {
   }
 
   useEffect(() => {
-    console.log(
-      "use effect - checking if elevators available and queue not empty"
-    );
-
     //Case queue is not empty and there are any available elevators
     if (callQueue.length > 0 && anyElevatorAvailable) {
       const dequeuedCall = callQueue[0];

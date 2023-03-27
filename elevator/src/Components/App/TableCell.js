@@ -34,18 +34,13 @@ const TableCell = function (props) {
   //Moving images logic here
 
   const shouldMove = elevator.status === "occupied";
-  console.log("should move?", shouldMove, props.id);
 
   const isElevatorInSameFloor =
     Number(elevators[props.elevator - 1].currentFloor) === Number(props.floor);
 
   // elevator.destinationFloor &&
   // elevator.currentFloor !== elevator.destinationFloor;
-  const difference = () => {
-    console.log(
-      "differnce between destination and current",
-      (elevator.destinationFloor - elevator.currentFloor) * 118
-    );
+  const calcDistance = () => {
     return (elevator.destinationFloor - elevator.currentFloor) * 118;
   };
 
@@ -59,7 +54,7 @@ const TableCell = function (props) {
       {checkIfRenderElevator && (
         <ImgContainer>
           <Elevator
-            difference={difference()}
+            distance={calcDistance()}
             moving={shouldMove}
             destination={elevator.destinationFloor}
             currentFloor={elevator.currentFloor}

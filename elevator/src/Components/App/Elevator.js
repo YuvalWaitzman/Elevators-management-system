@@ -1,15 +1,9 @@
 import styled, { keyframes } from "styled-components";
 import { useDispatch } from "react-redux";
-import { elevatorSystemActions } from "../Store";
+import { elevatorSystemActions } from "../../Store";
 
-const AnimatedElevatorImg = styled.svg`
-  animation: ${(props) => moveElevator(props.difference)} 2s linear;
-  animation-fill-mode: forwards;
-  animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
-`;
-
+//Animation function - gets the distance and performs the transformation
 const moveElevator = (x) => {
-  console.log("move elevator");
   return keyframes`
     0% {
       transform: translateY(0);
@@ -21,11 +15,21 @@ const moveElevator = (x) => {
   `;
 };
 
+const AnimatedElevatorImg = styled.svg`
+  animation: ${(props) =>
+      props.moving ? moveElevator(props.distance) : "none"}
+    ${(props) =>
+      Math.abs(props.distance) === 0 ? 2 : Math.abs(props.distance) / 100}s
+    linear;
+  animation-fill-mode: forwards;
+  animation-play-state: ${(props) => (props.moving ? "running" : "paused")};
+`;
+
 export const Elevator = (props) => {
-  console.log("Image component render ");
   const dispatch = useDispatch();
+
   const handleAnimationEnd = () => {
-    console.log("end of animation");
+    //Elevator arrived - updating button and elevator status
     dispatch(
       elevatorSystemActions.elevatorArrived({
         elevator: props.id,
@@ -33,6 +37,7 @@ export const Elevator = (props) => {
       })
     );
 
+    //Braking the elevator
     setTimeout(() => {
       dispatch(
         elevatorSystemActions.changeStatusAfterTwoSec({
@@ -42,11 +47,11 @@ export const Elevator = (props) => {
       );
     }, 2000);
   };
-  console.log("is moving", props.moving);
+
   return (
     <AnimatedElevatorImg
       onAnimationEnd={handleAnimationEnd}
-      difference={props.difference}
+      distance={props.distance}
       moving={props.moving}
       id={props.id}
       width="40"

@@ -70,10 +70,6 @@ let Building = function () {
   }
 
   useEffect(() => {
-    console.log(
-      "use effect - checking if elevators available and queue not empty"
-    );
-
     //Case queue is not empty and there are any available elevators
     if (callQueue.length > 0 && anyElevatorAvailable) {
       const dequeuedCall = callQueue[0];

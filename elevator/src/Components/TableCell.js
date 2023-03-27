@@ -25,8 +25,6 @@ const TableCell = function (props) {
   const checkIfRenderElevator =
     String(elevator.currentFloor) + String(props.elevator) === props.id;
 
-  console.log("Should render elevator?", checkIfRenderElevator);
-
   const checkIfRenderTimer =
     elevators[props.elevator - 1].status === "occupied" &&
     Number(elevators[props.elevator - 1].destinationFloor) ==
@@ -36,7 +34,6 @@ const TableCell = function (props) {
   //Moving images logic here
 
   const shouldMove = elevator.status === "occupied";
-  console.log("should move?", shouldMove, props.id);
 
   const isElevatorInSameFloor =
     Number(elevators[props.elevator - 1].currentFloor) === Number(props.floor);
@@ -44,10 +41,6 @@ const TableCell = function (props) {
   // elevator.destinationFloor &&
   // elevator.currentFloor !== elevator.destinationFloor;
   const difference = () => {
-    console.log(
-      "differnce between destination and current",
-      (elevator.destinationFloor - elevator.currentFloor) * 118
-    );
     return (elevator.destinationFloor - elevator.currentFloor) * 118;
   };
 

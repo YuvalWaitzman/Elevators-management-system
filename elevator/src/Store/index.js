@@ -12,7 +12,7 @@ const initialState = {
   occupiedElevatorsCounter: 0,
 };
 
-// Creating elevator objects according to the the number of elevators from initialState.size
+//Creating elevator objects according to the the number of elevators from initialState.size
 for (let i = 1; i <= initialState.size.elevators; i++) {
   initialState.elevators.push({
     id: i,

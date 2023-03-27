@@ -14,9 +14,9 @@ This project is a React and JavaScript-based application designed to manage an e
 
 ## Technologies Used
 
-React - A popular JavaScript library for building user interfaces, used for creating the front-end of the application.
-JavaScript - A programming language used for developing the application's logic and functionality.
-Redux Toolkit - A library that simplifies the process of using Redux, a state management library for JavaScript applications. It provides utilities for writing reducers, creating actions, and generating store configuration.
+- React - A popular JavaScript library for building user interfaces, used for creating the front-end of the application.
+- JavaScript - A programming language used for developing the application's logic and functionality.
+- Redux Toolkit - A library that simplifies the process of using Redux, a state management library for JavaScript applications. It provides utilities for writing reducers, creating actions, and generating store configuration.
 
 **State Managemen
 

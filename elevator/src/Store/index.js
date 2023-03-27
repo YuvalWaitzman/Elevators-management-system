@@ -38,7 +38,6 @@ const elevatorSystemSlice = createSlice({
   reducers: {
     // Creating a call object and inserting into the queue - trigerred with a click on one of the buttons
     createCall(state, action) {
-      console.log("call created");
       const newCall = { timeStamp: Date.now(), floor: action.payload };
 
       state.callQueue.push(newCall);
@@ -48,28 +47,9 @@ const elevatorSystemSlice = createSlice({
 
     // Choosing the available elevator with the min distance from requested floor
     assignElevator(state, action) {
-      console.log("assignin elevator process starting..");
-
-      let minDistance = state.buttons.length;
-      let bestElevators = [];
-      let bestElevator;
       let currentCall = action.payload;
-
-      state.elevators.forEach((elevator) => {
-        if (elevator.status === "available") {
-          let currentElevatorDistance = Math.abs(
-            elevator.currentFloor - currentCall.floor
-          );
-          if (currentElevatorDistance < minDistance) {
-            minDistance = currentElevatorDistance;
-            bestElevators = [elevator]; // clear the array and add the current elevator
-          } else if (currentElevatorDistance === minDistance) {
-            bestElevators.push(elevator); // add the current elevator to the array
-          }
-        }
-      });
-
-      bestElevator = chooseRandomFromArray(bestElevators);
+      let closestElevators = findClosestElevators(state.elevators, currentCall);
+      let bestElevator = chooseRandomFromArray(closestElevators);
 
       //Chosen elevator is taking the call + updating the occupied elevators counter
 
@@ -110,6 +90,25 @@ const elevatorSystemSlice = createSlice({
     },
   },
 });
+
+function findClosestElevators(elevators, currentCall) {
+  let closestElevators = [];
+  let minDistance = Number.MAX_SAFE_INTEGER;
+  elevators.forEach((elevator) => {
+    if (elevator.status === "available") {
+      let currentElevatorDistance = Math.abs(
+        elevator.currentFloor - currentCall.floor
+      );
+      if (currentElevatorDistance < minDistance) {
+        minDistance = currentElevatorDistance;
+        closestElevators = [elevator]; // clear the array and add the current elevator
+      } else if (currentElevatorDistance === minDistance) {
+        closestElevators.push(elevator);
+      }
+    }
+  });
+  return closestElevators;
+}
 
 const store = configureStore({ reducer: elevatorSystemSlice.reducer });
 

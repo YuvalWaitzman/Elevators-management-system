@@ -43,8 +43,8 @@ A redux slice is defined with 5 reducers in order to manage the state of the ent
 5. The 'dequeue' reducer is called when a call is completed it's process. It removes the first call object from the callQueue array in the state.
 
 ## Instructions
--Make sure that redux tool kit is installed.
-- run "npm start" to start the app.
+- Make sure that redux tool kit is installed.
+- Run "npm start" to start the app.
 
 
 
